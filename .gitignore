@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+
+.env
+
+debug_output/
+data/layout.json
+
+assets/champions/
+
+.DS_Store
+.vscode/

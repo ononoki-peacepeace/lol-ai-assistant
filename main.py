@@ -1,7 +1,7 @@
 import argparse
 import time
 from typing import List, Optional
-
+from role_inferer import RoleInferer
 from config import (
     CAPTURE_INTERVAL,
     TEMPLATE_SIZE,
@@ -16,7 +16,30 @@ from bp_state import BPState
 from bp_analyzer import BPAnalyzer
 from champion_recommender import ChampionRecommender
 from ai_commentator import AICommentator
+AI_STATE = {
+    "last_ai_key": None,
+    "is_ai_busy": False,
+}
 
+
+
+def build_ai_state_key(
+    ally_picks,
+    enemy_picks,
+    banned_champions,
+    target_role,
+    lane_opponent=None,
+):
+    def clean(items):
+        return tuple(x for x in items if x and x != "暂无")
+
+    return (
+        clean(ally_picks),
+        clean(enemy_picks),
+        clean(banned_champions),
+        target_role or "",
+        lane_opponent or "",
+    )
 def analyze_player_command(game_name: str, tag_line: str) -> None:
     """
     查询某个玩家最近 20 局常用英雄。
@@ -338,7 +361,22 @@ def run_bp_recommendation(
         blue_picks=blue_picks,
         red_picks=red_picks,
     )
+    role_inferer = RoleInferer()
+    enemy_role_map = role_inferer.infer_team_roles(enemy_picks)
 
+    print("\n===== 敌方位置推断 =====")
+    for role, info in enemy_role_map.items():
+        if role == "unknown":
+            print("未能推断位置：", info)
+        else:
+            print(role, info)
+
+    lane_opponent, confidence = role_inferer.get_lane_opponent(
+        enemy_picks=enemy_picks,
+        target_role=target_role,
+    )
+
+    print(f"\n预计对线敌人：{lane_opponent or '未知'}，置信度：{confidence}")
     banned_champions = flatten_existing(blue_bans, red_bans)
 
     analyzer = BPAnalyzer()
@@ -355,21 +393,45 @@ def run_bp_recommendation(
         ally_picks=ally_picks,
         enemy_picks=enemy_picks,
         banned_champions=banned_champions,
+        lane_opponent=lane_opponent,
+        lane_opponent_confidence=confidence,
         top_n=5,
     )
 
-    print_recommendations(recommendations)
-
     if use_ai and recommendations:
-        print("\n===== AI 解释 =====")
-        ai = AICommentator()
-        print(
-            ai.explain_bp(
-                analysis=analysis,
-                recommendations=recommendations,
-                target_role=target_role,
-            )
+        current_ai_key = build_ai_state_key(
+            ally_picks=ally_picks,
+            enemy_picks=enemy_picks,
+            banned_champions=banned_champions,
+            target_role=target_role,
+            lane_opponent=lane_opponent,
         )
+
+        if AI_STATE["is_ai_busy"]:
+            print("[AI] 上一次 AI 还没输出完，等待下一轮。")
+
+        elif current_ai_key == AI_STATE["last_ai_key"]:
+            print("[AI] BP 状态没变化，跳过本次 AI 解释。")
+
+        else:
+            AI_STATE["is_ai_busy"] = True
+
+            try:
+                print("\n===== AI 解释 =====")
+                ai = AICommentator()
+
+                ai_text = ai.explain_bp(
+                    analysis=analysis,
+                    recommendations=recommendations,
+                    target_role=target_role,
+                )
+
+                print(ai_text)
+
+                AI_STATE["last_ai_key"] = current_ai_key
+
+            finally:
+                AI_STATE["is_ai_busy"] = False
 
 
 def watch_bp_command(side: str, role: str | None, use_ai: bool) -> None:
@@ -393,6 +455,8 @@ def watch_bp_command(side: str, role: str | None, use_ai: bool) -> None:
     print("按 Ctrl + C 停止。")
 
     try:
+        last_ai_key = None
+        last_ai_time = 0
         while True:
             blue_bans, red_bans, blue_picks, red_picks = detect_bp_once(
                 capture=capture,

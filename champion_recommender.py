@@ -32,6 +32,8 @@ class ChampionRecommender:
         ally_picks: list[str] | None = None,
         enemy_picks: list[str] | None = None,
         banned_champions: list[str] | None = None,
+        lane_opponent: str | None = None,
+        lane_opponent_confidence: str = "unknown",
         top_n: int = 8,
     ) -> list[dict]:
         ally_picks = ally_picks or []
@@ -69,7 +71,12 @@ class ChampionRecommender:
                     score_reasons.append(f"命中推荐标签：{tag} +2")
 
             # 3. 康特关系加分 / 扣分
-            counter_score, counter_reasons = self._score_counters(champion_id, enemy_picks)
+            counter_score, counter_reasons = self._score_counters(
+            candidate_id=champion_id,
+            enemy_picks=enemy_picks,
+            lane_opponent=lane_opponent,
+            lane_opponent_confidence=lane_opponent_confidence,
+            )
             score += counter_score
             score_reasons.extend(counter_reasons)
 
@@ -119,7 +126,13 @@ class ChampionRecommender:
 
         return counter
 
-    def _score_counters(self, candidate_id: str, enemy_picks: list[str]) -> tuple[int, list[str]]:
+    def _score_counters(
+        self,
+        candidate_id: str,
+        enemy_picks: list[str],
+        lane_opponent: str | None = None,
+        lane_opponent_confidence: str = "unknown",
+    ) -> tuple[int, list[str]]:
         score = 0
         reasons = []
 
@@ -127,8 +140,20 @@ class ChampionRecommender:
 
         for item in info.get("good_against", []):
             enemy = item.get("champion")
-            if enemy in enemy_picks:
-                value = int(item.get("score", 0))
+
+            if enemy not in enemy_picks:
+                continue
+
+            base_value = int(item.get("score", 0))
+
+            if lane_opponent and enemy == lane_opponent:
+                value = base_value + 2
+                score += value
+                reasons.append(
+                    f"预计对线 {self.get_display_name(enemy)}，且有克制关系 +{value}：{item.get('reason', '')}"
+                )
+            else:
+                value = base_value
                 score += value
                 reasons.append(
                     f"对敌方 {self.get_display_name(enemy)} 有克制关系 +{value}：{item.get('reason', '')}"
@@ -136,8 +161,20 @@ class ChampionRecommender:
 
         for item in info.get("bad_against", []):
             enemy = item.get("champion")
-            if enemy in enemy_picks:
-                value = int(item.get("score", -1))
+
+            if enemy not in enemy_picks:
+                continue
+
+            base_value = int(item.get("score", -1))
+
+            if lane_opponent and enemy == lane_opponent:
+                value = base_value - 2
+                score += value
+                reasons.append(
+                    f"预计对线 {self.get_display_name(enemy)}，但这个对位有明显风险 {value}：{item.get('reason', '')}"
+                )
+            else:
+                value = base_value
                 score += value
                 reasons.append(
                     f"面对敌方 {self.get_display_name(enemy)} 有风险 {value}：{item.get('reason', '')}"

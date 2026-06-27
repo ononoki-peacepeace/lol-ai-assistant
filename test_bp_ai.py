@@ -7,10 +7,9 @@ analyzer = BPAnalyzer()
 recommender = ChampionRecommender()
 ai = AICommentator()
 
-ally_picks = ["Ashe", "LeeSin", "Orianna"]
-enemy_picks = ["Kaisa", "Nautilus", "XinZhao"]
+ally_picks = ["Orianna", "Ashe", "LeeSin"]
+enemy_picks = ["Yasuo", "Sylas", "Blitzcrank"]
 banned_champions = []
-
 target_role = "上单"
 
 analysis = analyzer.analyze(ally_picks, enemy_picks)
@@ -32,6 +31,9 @@ for item in recommendations:
         f"命中标签:{item['matched_tags']} "
         f"全部标签:{item['all_tags']}"
     )
+
+    for reason in item.get("score_reasons", []):
+        print(f"  - {reason}")
 
 print("\n===== AI 解释 =====")
 if recommendations:

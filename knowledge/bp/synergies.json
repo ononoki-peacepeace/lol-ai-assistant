@@ -1,0 +1,30 @@
+{
+  "Orianna": {
+    "good_with": [
+      {
+        "champion": "Malphite",
+        "score": 3,
+        "reason": "墨菲特进场后可以配合发条大招打出团战控制链。"
+      },
+      {
+        "champion": "JarvanIV",
+        "score": 3,
+        "reason": "皇子大招可以限制敌方走位，方便发条接大。"
+      }
+    ]
+  },
+  "Yasuo": {
+    "good_with": [
+      {
+        "champion": "Malphite",
+        "score": 3,
+        "reason": "墨菲特击飞可以稳定配合亚索大招。"
+      },
+      {
+        "champion": "Alistar",
+        "score": 2,
+        "reason": "牛头有稳定击飞，可以帮助亚索进场。"
+      }
+    ]
+  }
+}

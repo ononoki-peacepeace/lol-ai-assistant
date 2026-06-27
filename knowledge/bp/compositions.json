@@ -1,0 +1,23 @@
+[
+  {
+    "id": "front_to_back",
+    "name": "正面团战阵容",
+    "required_tags": ["前排", "持续输出", "控制"],
+    "bonus_tags": ["保护", "开团"],
+    "description": "依靠前排站住正面，让后排持续输出。"
+  },
+  {
+    "id": "engage_comp",
+    "name": "强开阵容",
+    "required_tags": ["开团", "控制"],
+    "bonus_tags": ["突进", "爆发"],
+    "description": "通过先手控制快速开启团战，抓住敌方站位失误。"
+  },
+  {
+    "id": "poke_comp",
+    "name": "消耗阵容",
+    "required_tags": ["消耗", "远程"],
+    "bonus_tags": ["控制", "拉扯"],
+    "description": "团战前通过远程技能消耗敌方血量。"
+  }
+]

@@ -1,0 +1,11 @@
+champion,enemy,role,patch,rank,source,win_rate,sample_size,score,confidence,reason
+Malphite,Yasuo,上单,unknown,all,manual,0,0,3,medium,"墨菲特护甲收益高，并且团战大招能限制亚索进场"
+Malphite,Tryndamere,上单,unknown,all,manual,0,0,2,medium,"墨菲特护甲和减攻速能力对普攻型物理英雄比较有效"
+Malphite,Sylas,上单,unknown,all,manual,0,0,-3,high,"塞拉斯可以偷墨菲特大招，团战威胁很高"
+Morgana,Blitzcrank,辅助,unknown,all,manual,0,0,3,high,"莫甘娜黑盾可以抵消机器人的关键控制"
+Morgana,Nautilus,辅助,unknown,all,manual,0,0,2,medium,"莫甘娜黑盾可以降低泰坦先手控制的威胁"
+Rammus,MasterYi,打野,unknown,all,manual,0,0,3,high,"拉莫斯护甲和反伤能力很克制依赖普攻输出的剑圣"
+Rammus,Samira,打野,unknown,all,manual,0,0,2,medium,"拉莫斯对近身普攻型输出有较好限制能力"
+Vayne,Ornn,下路,unknown,all,manual,0,0,2,medium,"薇恩百分比真实伤害对坦克前排威胁较大"
+Vayne,Sion,下路,unknown,all,manual,0,0,2,medium,"薇恩持续输出和真实伤害适合处理高血量前排"
+Janna,Leona,辅助,unknown,all,manual,0,0,2,medium,"风女的保护和反开能力可以限制蕾欧娜强开"

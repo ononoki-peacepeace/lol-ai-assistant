@@ -1,0 +1,148 @@
+{
+  "Malphite": {
+    "good_against": [
+      {
+        "champion": "Yasuo",
+        "score": 3,
+        "role": "上单",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "墨菲特护甲收益高，并且团战大招能限制亚索进场"
+      },
+      {
+        "champion": "Tryndamere",
+        "score": 2,
+        "role": "上单",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "墨菲特护甲和减攻速能力对普攻型物理英雄比较有效"
+      }
+    ],
+    "bad_against": [
+      {
+        "champion": "Sylas",
+        "score": -3,
+        "role": "上单",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "high",
+        "reason": "塞拉斯可以偷墨菲特大招，团战威胁很高"
+      }
+    ]
+  },
+  "Morgana": {
+    "good_against": [
+      {
+        "champion": "Blitzcrank",
+        "score": 3,
+        "role": "辅助",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "high",
+        "reason": "莫甘娜黑盾可以抵消机器人的关键控制"
+      },
+      {
+        "champion": "Nautilus",
+        "score": 2,
+        "role": "辅助",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "莫甘娜黑盾可以降低泰坦先手控制的威胁"
+      }
+    ],
+    "bad_against": []
+  },
+  "Rammus": {
+    "good_against": [
+      {
+        "champion": "MasterYi",
+        "score": 3,
+        "role": "打野",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "high",
+        "reason": "拉莫斯护甲和反伤能力很克制依赖普攻输出的剑圣"
+      },
+      {
+        "champion": "Samira",
+        "score": 2,
+        "role": "打野",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "拉莫斯对近身普攻型输出有较好限制能力"
+      }
+    ],
+    "bad_against": []
+  },
+  "Vayne": {
+    "good_against": [
+      {
+        "champion": "Ornn",
+        "score": 2,
+        "role": "下路",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "薇恩百分比真实伤害对坦克前排威胁较大"
+      },
+      {
+        "champion": "Sion",
+        "score": 2,
+        "role": "下路",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "薇恩持续输出和真实伤害适合处理高血量前排"
+      }
+    ],
+    "bad_against": []
+  },
+  "Janna": {
+    "good_against": [
+      {
+        "champion": "Leona",
+        "score": 2,
+        "role": "辅助",
+        "patch": "unknown",
+        "rank": "all",
+        "source": "manual",
+        "win_rate": 0.0,
+        "sample_size": 0,
+        "confidence": "medium",
+        "reason": "风女的保护和反开能力可以限制蕾欧娜强开"
+      }
+    ],
+    "bad_against": []
+  }
+}

@@ -30,7 +30,12 @@ LAYOUT_PATH = DATA_DIR / "layout.json"
 PICK_RULES_PATH = RULES_DIR / "bp" / "pick_rules.json"
 
 LLM_CONFIG_PATH = CONFIGS_DIR / "llm_config.json"
+KNOWLEDGE_DIR = BASE_DIR / "knowledge"
+BP_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "bp"
 
+COUNTERS_PATH = BP_KNOWLEDGE_DIR / "counters.json"
+SYNERGIES_PATH = BP_KNOWLEDGE_DIR / "synergies.json"
+COMPOSITIONS_PATH = BP_KNOWLEDGE_DIR / "compositions.json"
 
 # =========================
 # 兼容旧代码的别名
@@ -155,6 +160,7 @@ def ensure_dirs():
     DEBUG_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     CHAMPION_ICON_DIR.mkdir(parents=True, exist_ok=True)
     EMPTY_SLOT_TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
-
+    KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
+    BP_KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
 
 ensure_dirs()

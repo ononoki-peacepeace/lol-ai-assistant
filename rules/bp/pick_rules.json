@@ -4,50 +4,134 @@
     "name": "己方缺少前排",
     "condition": {
       "ally_tag": "前排",
-      "max_count": 0,
-      "available_roles": ["上单", "打野", "辅助"]
+      "max_count": 0
     },
     "recommend": {
       "tags": ["前排", "坦克", "开团"],
       "short": "己方目前缺少前排，后续选人可以优先补坦克或开团英雄。",
-      "reason": "如果阵容没有前排，团战很难占住正面，也更难稳定争夺资源。"
+      "reason": "没有前排时，团战很难占住正面，也不容易稳定争夺资源。"
     },
-    "priority": "high"
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
   },
   {
-    "id": "enemy_many_engage_need_disengage",
-    "name": "敌方强开多，需要反开或保护",
+    "id": "need_engage",
+    "name": "己方缺少开团",
     "condition": {
-      "enemy_tag": "开团",
-      "min_count": 2,
+      "ally_tag": "开团",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["开团", "控制", "前排", "突进"],
+      "short": "己方目前缺少主动开团点，后续可以补能先手的英雄。",
+      "reason": "没有开团能力时，阵容容易只能被动接团，很难主动抓机会。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "need_control",
+    "name": "己方缺少控制",
+    "condition": {
+      "ally_tag": "控制",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["控制", "开团", "反开"],
+      "short": "己方控制不足，后续可以补稳定控制或反开英雄。",
+      "reason": "缺少控制会导致团战留不住人，也很难限制敌方核心输出。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "need_peel",
+    "name": "己方缺少保护",
+    "condition": {
       "ally_tag": "保护",
       "max_count": 0
     },
     "recommend": {
       "tags": ["保护", "反开", "控制", "辅助型"],
-      "short": "敌方开团较多，己方后续可以补保护或反开英雄。",
-      "reason": "如果敌方有多个先手点，己方需要有办法保护后排或打断对方进场。"
+      "short": "己方缺少保护能力，后续可以补保护或反开英雄。",
+      "reason": "如果己方有后排核心但缺保护，团战容易被突进和刺客切掉。"
     },
-    "priority": "high"
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
   },
   {
-    "id": "ally_lacks_ap_damage",
-    "name": "己方缺少魔法伤害",
+    "id": "need_sustained_damage",
+    "name": "己方缺少持续输出",
     "condition": {
-      "ally_tag": "法师",
-      "max_count": 0,
-      "available_roles": ["中单", "打野", "辅助"]
+      "ally_tag": "持续输出",
+      "max_count": 0
     },
     "recommend": {
-      "tags": ["法师", "魔法伤害", "消耗"],
-      "short": "己方目前偏物理伤害，后续最好补一些魔法伤害。",
-      "reason": "如果伤害类型过于单一，对方可以更容易通过护甲或魔抗进行针对。"
+      "tags": ["持续输出", "射手", "后期"],
+      "short": "己方缺少持续输出，后续可以补能稳定打团和处理前排的英雄。",
+      "reason": "如果只有爆发没有持续输出，面对坦克或长时间团战时容易伤害不够。"
     },
-    "priority": "medium"
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "high"
   },
   {
-    "id": "ally_many_late_need_early_jungle",
-    "name": "己方后期英雄多，需要前期节奏",
+    "id": "need_ap_damage",
+    "name": "己方法系伤害不足",
+    "condition": {
+      "ally_tag": "法师",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["法师", "魔法伤害", "消耗", "爆发"],
+      "short": "己方法系伤害不足，后续可以补法师或魔法伤害英雄。",
+      "reason": "如果阵容伤害类型过于单一，敌方更容易针对性堆抗性。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "need_ad_damage",
+    "name": "己方物理输出不足",
+    "condition": {
+      "ally_tag": "射手",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["射手", "持续输出", "物理伤害"],
+      "short": "己方物理持续输出不足，后续可以补射手或稳定物理输出。",
+      "reason": "缺少物理持续输出时，阵容在处理前排和资源团时可能伤害不足。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "team_too_squishy",
+    "name": "己方阵容偏脆",
+    "condition": {
+      "ally_tag": "前排",
+      "max_count": 0,
+      "ally_tag_2": "刺客",
+      "min_count_2": 1
+    },
+    "recommend": {
+      "tags": ["前排", "坦克", "保护", "反开"],
+      "short": "己方阵容偏脆，后续需要补坦度或保护能力。",
+      "reason": "脆皮英雄多时，团战容错率较低，需要有人能站正面或保护核心。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "too_many_late_game_need_early",
+    "name": "己方后期英雄偏多，缺前中期节奏",
     "condition": {
       "ally_tag": "后期",
       "min_count": 2,
@@ -55,24 +139,226 @@
       "max_count_2": 0
     },
     "recommend": {
-      "tags": ["前期", "节奏", "打野", "游走"],
-      "short": "己方后期英雄较多，最好补一个前期能带节奏的点。",
-      "reason": "纯后期阵容前期容易被压制，需要有人帮队伍撑住前中期节奏。"
+      "tags": ["前期", "游走", "支援", "开团", "控制"],
+      "short": "己方后期英雄较多，后续可以补前中期节奏点。",
+      "reason": "如果阵容全靠后期，前中期容易被敌方滚雪球。"
     },
-    "priority": "medium"
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
   },
   {
-    "id": "enemy_many_assassins_need_protect",
+    "id": "enemy_many_assassins_need_peel",
     "name": "敌方刺客多，需要保护后排",
     "condition": {
       "enemy_tag": "刺客",
-      "min_count": 2
+      "min_count": 2,
+      "ally_tag_2": "保护",
+      "max_count_2": 0
     },
     "recommend": {
-      "tags": ["保护", "控制", "反开", "护盾", "坦克"],
-      "short": "敌方刺客较多，己方需要补保护或稳定控制。",
-      "reason": "刺客阵容会威胁后排输出，己方需要有保护核心位的能力。"
+      "tags": ["保护", "反开", "控制", "辅助型"],
+      "short": "敌方刺客较多，己方后续需要保护或反开。",
+      "reason": "多个刺客会威胁后排核心，缺保护时团战容易被直接切崩。"
     },
-    "priority": "high"
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "enemy_many_divers_need_control",
+    "name": "敌方突进多，需要控制和反开",
+    "condition": {
+      "enemy_tag": "突进",
+      "min_count": 2,
+      "ally_tag_2": "控制",
+      "max_count_2": 1
+    },
+    "recommend": {
+      "tags": ["控制", "反开", "保护", "前排"],
+      "short": "敌方突进较多，己方后续需要补控制或反开能力。",
+      "reason": "面对多突进阵容，如果没有控制和反开，很容易被敌方冲散阵型。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "enemy_many_engage_need_disengage",
+    "name": "敌方强开多，需要反开",
+    "condition": {
+      "enemy_tag": "开团",
+      "min_count": 2,
+      "ally_tag_2": "反开",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["反开", "保护", "控制", "回复"],
+      "short": "敌方强开能力较多，己方后续可以补反开或保护。",
+      "reason": "敌方先手点多时，己方需要能打断进场、保护后排或反打一波。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "enemy_many_tanks_need_dps",
+    "name": "敌方前排多，需要持续输出",
+    "condition": {
+      "enemy_tag": "前排",
+      "min_count": 2,
+      "ally_tag_2": "持续输出",
+      "max_count_2": 1
+    },
+    "recommend": {
+      "tags": ["持续输出", "射手", "后期"],
+      "short": "敌方前排较多，己方后续需要补持续输出或打坦能力。",
+      "reason": "敌方坦度高时，单纯爆发很难处理，需要稳定持续伤害。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "enemy_many_poke_need_engage",
+    "name": "敌方消耗多，需要强开",
+    "condition": {
+      "enemy_tag": "消耗",
+      "min_count": 2,
+      "ally_tag_2": "开团",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["开团", "突进", "前排", "控制"],
+      "short": "敌方消耗能力较强，己方后续需要补强开或突进。",
+      "reason": "面对消耗阵容，如果一直被拉扯，会在团战前被打残，需要主动开团。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "enemy_poke_need_sustain",
+    "name": "敌方消耗多，也可以补回复",
+    "condition": {
+      "enemy_tag": "消耗",
+      "min_count": 2,
+      "ally_tag_2": "回复",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["回复", "保护", "辅助型"],
+      "short": "敌方消耗较多，己方也可以补回复或保护能力。",
+      "reason": "回复和保护可以降低敌方消耗阵容在团前压血线的效果。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "enemy_many_late_game_need_tempo",
+    "name": "敌方后期强，需要前中期节奏",
+    "condition": {
+      "enemy_tag": "后期",
+      "min_count": 2,
+      "ally_tag_2": "前期",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["前期", "游走", "支援", "开团", "爆发"],
+      "short": "敌方后期能力较强，己方后续可以补前中期节奏英雄。",
+      "reason": "如果放任敌方后期阵容发育，后续团战压力会越来越大。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "ally_has_hard_carry_need_peel",
+    "name": "己方有后期核心，需要保护",
+    "condition": {
+      "ally_tag": "后期",
+      "min_count": 1,
+      "ally_tag_2": "保护",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["保护", "反开", "控制", "辅助型"],
+      "short": "己方已有后期核心，后续可以补保护或反开能力。",
+      "reason": "有后期核心时，阵容需要保证核心能活到输出环境形成。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "ally_has_poke_need_frontline_or_disengage",
+    "name": "己方有消耗，需要前排或反开",
+    "condition": {
+      "ally_tag": "消耗",
+      "min_count": 2,
+      "ally_tag_2": "前排",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["前排", "反开", "控制", "保护"],
+      "short": "己方消耗能力较强，但缺少正面支撑，后续可以补前排或反开。",
+      "reason": "消耗阵容需要空间拉扯，如果没有前排或反开，被敌方强开会很难处理。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
+  },
+  {
+    "id": "ally_many_engage_need_damage_followup",
+    "name": "己方开团多，需要后续输出",
+    "condition": {
+      "ally_tag": "开团",
+      "min_count": 2,
+      "ally_tag_2": "持续输出",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["持续输出", "射手", "法师", "爆发"],
+      "short": "己方开团能力已经足够，后续需要补输出跟进。",
+      "reason": "开团多但伤害不足时，可能先手成功却打不死人。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "ally_many_damage_need_frontline",
+    "name": "己方输出多，需要前排承接",
+    "condition": {
+      "ally_tag": "持续输出",
+      "min_count": 2,
+      "ally_tag_2": "前排",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["前排", "坦克", "保护", "开团"],
+      "short": "己方输出已经不少，后续更适合补前排或保护。",
+      "reason": "输出英雄多但没人站前面时，团战容易没有输出空间。"
+    },
+    "priority": "high",
+    "source": ["draft_principle"],
+    "confidence": "high"
+  },
+  {
+    "id": "need_teamfight_tool",
+    "name": "己方团战能力不足",
+    "condition": {
+      "ally_tag": "团战",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["团战", "开团", "控制", "前排"],
+      "short": "己方团战能力不足，后续可以补更适合资源团的英雄。",
+      "reason": "缺少团战工具时，小龙、先锋、大龙等资源争夺会更难打。"
+    },
+    "priority": "medium",
+    "source": ["draft_principle"],
+    "confidence": "medium"
   }
 ]

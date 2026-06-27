@@ -1,0 +1,9 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "base_url": "http://127.0.0.1:11434",
+  "stream": true,
+  "max_tokens": 300,
+  "temperature": 0.3,
+  "character_card": "default_assistant"
+}

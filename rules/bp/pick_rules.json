@@ -1,0 +1,78 @@
+[
+  {
+    "id": "need_frontline",
+    "name": "己方缺少前排",
+    "condition": {
+      "ally_tag": "前排",
+      "max_count": 0,
+      "available_roles": ["上单", "打野", "辅助"]
+    },
+    "recommend": {
+      "tags": ["前排", "坦克", "开团"],
+      "short": "己方目前缺少前排，后续选人可以优先补坦克或开团英雄。",
+      "reason": "如果阵容没有前排，团战很难占住正面，也更难稳定争夺资源。"
+    },
+    "priority": "high"
+  },
+  {
+    "id": "enemy_many_engage_need_disengage",
+    "name": "敌方强开多，需要反开或保护",
+    "condition": {
+      "enemy_tag": "开团",
+      "min_count": 2,
+      "ally_tag": "保护",
+      "max_count": 0
+    },
+    "recommend": {
+      "tags": ["保护", "反开", "控制", "辅助型"],
+      "short": "敌方开团较多，己方后续可以补保护或反开英雄。",
+      "reason": "如果敌方有多个先手点，己方需要有办法保护后排或打断对方进场。"
+    },
+    "priority": "high"
+  },
+  {
+    "id": "ally_lacks_ap_damage",
+    "name": "己方缺少魔法伤害",
+    "condition": {
+      "ally_tag": "法师",
+      "max_count": 0,
+      "available_roles": ["中单", "打野", "辅助"]
+    },
+    "recommend": {
+      "tags": ["法师", "魔法伤害", "消耗"],
+      "short": "己方目前偏物理伤害，后续最好补一些魔法伤害。",
+      "reason": "如果伤害类型过于单一，对方可以更容易通过护甲或魔抗进行针对。"
+    },
+    "priority": "medium"
+  },
+  {
+    "id": "ally_many_late_need_early_jungle",
+    "name": "己方后期英雄多，需要前期节奏",
+    "condition": {
+      "ally_tag": "后期",
+      "min_count": 2,
+      "ally_tag_2": "前期",
+      "max_count_2": 0
+    },
+    "recommend": {
+      "tags": ["前期", "节奏", "打野", "游走"],
+      "short": "己方后期英雄较多，最好补一个前期能带节奏的点。",
+      "reason": "纯后期阵容前期容易被压制，需要有人帮队伍撑住前中期节奏。"
+    },
+    "priority": "medium"
+  },
+  {
+    "id": "enemy_many_assassins_need_protect",
+    "name": "敌方刺客多，需要保护后排",
+    "condition": {
+      "enemy_tag": "刺客",
+      "min_count": 2
+    },
+    "recommend": {
+      "tags": ["保护", "控制", "反开", "护盾", "坦克"],
+      "short": "敌方刺客较多，己方需要补保护或稳定控制。",
+      "reason": "刺客阵容会威胁后排输出，己方需要有保护核心位的能力。"
+    },
+    "priority": "high"
+  }
+]

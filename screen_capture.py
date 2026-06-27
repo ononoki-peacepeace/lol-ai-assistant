@@ -1,40 +1,52 @@
-from typing import Dict
-
+import cv2
 import mss
 import numpy as np
-import cv2
 
 from config import SCREEN_REGION
+from window_utils import get_lol_client_region
 
 
 class ScreenCapture:
-    """
-    使用 mss 截取屏幕。
-    """
+    def __init__(self, region=None, prefer_lol_window=True):
+        self.region = region
+        self.prefer_lol_window = prefer_lol_window
 
-    def __init__(self, region: Dict[str, int] | None = None):
-        self.region = region or SCREEN_REGION
+    def get_region(self):
+        """
+        优先截 LOL 客户端窗口。
+        找不到 LOL 窗口时，退回 SCREEN_REGION。
+        SCREEN_REGION 也为空时，截主屏幕。
+        """
+        if self.prefer_lol_window:
+            lol_region = get_lol_client_region()
+            if lol_region is not None:
+                return lol_region
 
-    def capture(self) -> np.ndarray:
+        if self.region is not None:
+            return self.region
+
+        if SCREEN_REGION is not None:
+            return SCREEN_REGION
+
+        return None
+
+    def capture(self):
         """
-        截取屏幕，返回 OpenCV BGR 图像。
+        返回 BGR 图片。
         """
+        region = self.get_region()
+
         with mss.mss() as sct:
-            img = sct.grab(self.region)
-            frame = np.array(img)
+            if region is None:
+                monitor = sct.monitors[1]
+                img = np.array(sct.grab(monitor))
+            else:
+                img = np.array(sct.grab(region))
 
-        # mss 返回 BGRA，OpenCV 常用 BGR
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
-        return frame
+        img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
+        return img
 
-    @staticmethod
-    def crop(frame: np.ndarray, slot: Dict[str, int]) -> np.ndarray:
-        """
-        根据坐标裁剪图像。
-        """
-        left = slot["left"]
-        top = slot["top"]
-        width = slot["width"]
-        height = slot["height"]
-
-        return frame[top:top + height, left:left + width]
+    def save_debug(self, path):
+        img = self.capture()
+        cv2.imwrite(str(path), img)
+        return img

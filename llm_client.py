@@ -59,12 +59,7 @@ class LLMClient:
                 f"PowerShell 临时设置：$env:{self.api_key_env}=\"你的key\""
             )
 
-        """
-        print(f"[LLM] provider={self.provider}")
-        print(f"[LLM] model={self.model}")
-        print(f"[LLM] base_url={self.base_url}")
-        print("[LLM] 正在请求 DeepSeek API...")
-        """
+       
 
 
         client = OpenAI(
@@ -85,6 +80,5 @@ class LLMClient:
             print("[LLM] DeepSeek API 调用失败")
             raise e
 
-        print("[LLM] DeepSeek API 返回成功")
 
         return response.choices[0].message.content or ""

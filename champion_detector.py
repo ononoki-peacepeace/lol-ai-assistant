@@ -5,8 +5,13 @@ import cv2
 import numpy as np
 
 from config import (
-    CHAMPION_TEMPLATE_DIR,
+    CHAMPION_ICON_DIR,
+    EMPTY_SLOT_TEMPLATE_DIR,
     MATCH_THRESHOLD,
+    MATCH_GAP_THRESHOLD,
+    EMPTY_SLOT_THRESHOLD,
+    EMPTY_SLOT_MARGIN,
+    TEMPLATE_SIZE,
 )
 
 # 下面这些配置如果 config.py 里没写，就使用默认值
@@ -44,7 +49,7 @@ class ChampionDetector:
 
     def __init__(
         self,
-        template_dir=CHAMPION_TEMPLATE_DIR,
+        template_dir=CHAMPION_ICON_DIR,
         threshold: float = MATCH_THRESHOLD,
         image_size: int = 96,
         inner_circle_ratio: float = 0.38,

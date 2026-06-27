@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import os
 
 
 # =========================
@@ -13,6 +14,9 @@ ASSETS_DIR = BASE_DIR / "assets"
 RULES_DIR = BASE_DIR / "rules"
 CONFIGS_DIR = BASE_DIR / "configs"
 CHARACTERS_DIR = BASE_DIR / "characters"
+KNOWLEDGE_DIR = BASE_DIR / "knowledge"
+BP_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "bp"
+RAW_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "raw"
 DEBUG_OUTPUT_DIR = BASE_DIR / "debug_output"
 
 
@@ -29,17 +33,16 @@ LAYOUT_PATH = DATA_DIR / "layout.json"
 
 PICK_RULES_PATH = RULES_DIR / "bp" / "pick_rules.json"
 
-LLM_CONFIG_PATH = CONFIGS_DIR / "llm_config.json"
-KNOWLEDGE_DIR = BASE_DIR / "knowledge"
-BP_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "bp"
-
 COUNTERS_PATH = BP_KNOWLEDGE_DIR / "counters.json"
 SYNERGIES_PATH = BP_KNOWLEDGE_DIR / "synergies.json"
 COMPOSITIONS_PATH = BP_KNOWLEDGE_DIR / "compositions.json"
 
+LLM_CONFIG_PATH = CONFIGS_DIR / "llm_config.json"
+
+
 # =========================
 # 兼容旧代码的别名
-# 如果之前某些文件用的是这些名字，就不会报错
+# 旧文件如果 import 这些名字，也不会报错
 # =========================
 
 CHAMPION_DIR = CHAMPION_ICON_DIR
@@ -47,9 +50,36 @@ CHAMPIONS_FILE = CHAMPIONS_PATH
 CHAMPION_TAGS_FILE = CHAMPION_TAGS_PATH
 LAYOUT_FILE = LAYOUT_PATH
 
+EMPTY_SLOT_DIR = EMPTY_SLOT_TEMPLATE_DIR
+EMPTY_SLOT_TEMPLATE_PATH = EMPTY_SLOT_TEMPLATE_DIR
+
+RULES_PATH = RULES_DIR
+BP_RULES_PATH = RULES_DIR / "bp"
+
+OUTPUT_DIR = DEBUG_OUTPUT_DIR
+DEBUG_DIR = DEBUG_OUTPUT_DIR
+
 
 # =========================
-# 识别相关参数
+# 截图相关配置
+# =========================
+
+# None 表示使用 screen_capture.py 里的默认全屏逻辑。
+# 如果你的 screen_capture.py 直接 mss.grab(SCREEN_REGION)，None 可能不行；
+# 那就改成类似：
+# SCREEN_REGION = {"left": 0, "top": 0, "width": 1920, "height": 1080}
+SCREEN_REGION = None
+
+# 旧代码 main.py 可能 import CAPTURE_INTERVAL
+CAPTURE_INTERVAL = 1.0
+
+# 新代码也可以用 WATCH_INTERVAL
+WATCH_INTERVAL = CAPTURE_INTERVAL
+
+DEFAULT_LAYOUT_PATH = DATA_DIR / "default_layout_1280x720.json"
+
+# =========================
+# 英雄识别相关参数
 # =========================
 
 # 英雄匹配阈值
@@ -70,12 +100,12 @@ CONFIRM_FRAMES = 3
 # 模板统一尺寸
 TEMPLATE_SIZE = 96
 
-# watch-bp 截图间隔，单位秒
-WATCH_INTERVAL = 1.0
+# 有些旧代码可能用这个名字
+IMAGE_SIZE = TEMPLATE_SIZE
 
 
 # =========================
-# 位置映射
+# BP / 位置相关
 # =========================
 
 ROLE_MAP = {
@@ -86,8 +116,45 @@ ROLE_MAP = {
     "middle": "中单",
     "adc": "下路",
     "bot": "下路",
+    "bottom": "下路",
     "support": "辅助",
     "sup": "辅助",
+}
+
+
+SIDE_MAP = {
+    "blue": "蓝方",
+    "red": "红方",
+}
+
+
+# =========================
+# Riot API 相关
+# 暂时不用也没事，留着兼容 analyze-player
+# =========================
+
+RIOT_API_KEY = os.environ.get("RIOT_API_KEY", "")
+
+# 常见大区配置，后面你可以按实际改
+RIOT_PLATFORM = "HN1"
+RIOT_REGION = "ASIA"
+# 兼容旧 riot_api.py 使用的名字
+PLATFORM_ROUTE = RIOT_PLATFORM
+REGIONAL_ROUTE = RIOT_REGION
+
+# =========================
+# LLM / AI 相关默认值
+# 实际优先读取 configs/llm_config.json
+# =========================
+
+DEFAULT_LLM_CONFIG = {
+    "provider": "ollama",
+    "model": "qwen2.5:0.5b",
+    "base_url": "http://127.0.0.1:11434",
+    "stream": False,
+    "max_tokens": 400,
+    "temperature": 0.7,
+    "character_card": "default_assistant",
 }
 
 
@@ -103,11 +170,13 @@ def load_json(path: Path, default=None):
     if default is None:
         default = {}
 
+    path = Path(path)
+
     if not path.exists():
         return default
 
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8-sig") as f:
             return json.load(f)
     except json.JSONDecodeError as e:
         print(f"[JSON 解析失败] {path}")
@@ -119,6 +188,7 @@ def save_json(path: Path, data, indent: int = 2):
     """
     保存 JSON 文件，自动创建父目录。
     """
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(path, "w", encoding="utf-8") as f:
@@ -131,10 +201,19 @@ def save_json(path: Path, data, indent: int = 2):
 
 def load_layout():
     """
-    读取 BP 校准坐标。
-    注意：这里不主动 print，避免 import config 时产生多余输出。
+    优先读取默认 1280x720 客户端布局。
+    如果没有默认布局，再读取手动校准 layout。
     """
-    return load_json(LAYOUT_PATH, default={})
+    if DEFAULT_LAYOUT_PATH.exists():
+        print(f"已加载默认布局：{DEFAULT_LAYOUT_PATH}")
+        return load_json(DEFAULT_LAYOUT_PATH, default={})
+
+    if LAYOUT_PATH.exists():
+        print(f"已加载校准布局：{LAYOUT_PATH}")
+        return load_json(LAYOUT_PATH, default={})
+
+    print("没有找到布局文件。")
+    return {}
 
 
 def save_layout(layout: dict):
@@ -142,6 +221,20 @@ def save_layout(layout: dict):
     保存 BP 校准坐标。
     """
     save_json(LAYOUT_PATH, layout)
+
+
+# =========================
+# LLM config 相关
+# =========================
+
+def load_llm_config():
+    """
+    读取 LLM 配置。
+    """
+    config = DEFAULT_LLM_CONFIG.copy()
+    user_config = load_json(LLM_CONFIG_PATH, default={})
+    config.update(user_config)
+    return config
 
 
 # =========================
@@ -157,10 +250,15 @@ def ensure_dirs():
     RULES_DIR.mkdir(parents=True, exist_ok=True)
     CONFIGS_DIR.mkdir(parents=True, exist_ok=True)
     CHARACTERS_DIR.mkdir(parents=True, exist_ok=True)
-    DEBUG_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    CHAMPION_ICON_DIR.mkdir(parents=True, exist_ok=True)
-    EMPTY_SLOT_TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
     KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
     BP_KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
+    DEBUG_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    CHAMPION_ICON_DIR.mkdir(parents=True, exist_ok=True)
+    EMPTY_SLOT_TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+
+    BP_RULES_PATH.mkdir(parents=True, exist_ok=True)
+
 
 ensure_dirs()

@@ -34,7 +34,7 @@ LAYOUT_PATH = DATA_DIR / "layout.json"
 PICK_RULES_PATH = RULES_DIR / "bp" / "pick_rules.json"
 
 COUNTERS_PATH = BP_KNOWLEDGE_DIR / "counters.json"
-SYNERGIES_PATH = BP_KNOWLEDGE_DIR / "synergies.json"
+team_combo_PATH = BP_KNOWLEDGE_DIR / "team_combo.json"
 COMPOSITIONS_PATH = BP_KNOWLEDGE_DIR / "compositions.json"
 
 LLM_CONFIG_PATH = CONFIGS_DIR / "llm_config.json"

@@ -4,7 +4,7 @@ from config import (
     CHAMPIONS_PATH,
     CHAMPION_TAGS_PATH,
     COUNTERS_PATH,
-    SYNERGIES_PATH,
+    team_combo_PATH,
     COMPOSITIONS_PATH,
     load_json,
 )
@@ -15,7 +15,7 @@ class ChampionRecommender:
         self.champions = load_json(CHAMPIONS_PATH, default={})
         self.champion_tags = load_json(CHAMPION_TAGS_PATH, default={})
         self.counters = load_json(COUNTERS_PATH, default={})
-        self.synergies = load_json(SYNERGIES_PATH, default={})
+        self.team_combo = load_json(team_combo_PATH, default={})
         self.compositions = load_json(COMPOSITIONS_PATH, default=[])
 
     def get_display_name(self, champion_id: str) -> str:
@@ -81,7 +81,7 @@ class ChampionRecommender:
             score_reasons.extend(counter_reasons)
 
             # 4. 己方配合加分
-            synergy_score, synergy_reasons = self._score_synergies(champion_id, ally_picks)
+            synergy_score, synergy_reasons = self._score_team_combo(champion_id, ally_picks)
             score += synergy_score
             score_reasons.extend(synergy_reasons)
 
@@ -182,13 +182,13 @@ class ChampionRecommender:
 
         return score, reasons
 
-    def _score_synergies(self, candidate_id: str, ally_picks: list[str]) -> tuple[int, list[str]]:
+    def _score_team_combo(self, candidate_id: str, ally_picks: list[str]) -> tuple[int, list[str]]:
         score = 0
         reasons = []
         seen_pairs = set()
 
         # 情况 A：candidate 自己配置了 good_with
-        candidate_info = self.synergies.get(candidate_id, {})
+        candidate_info = self.team_combo.get(candidate_id, {})
         for item in candidate_info.get("good_with", []):
             ally = item.get("champion")
             if ally in ally_picks:
@@ -205,7 +205,7 @@ class ChampionRecommender:
 
         # 情况 B：己方英雄配置了 good_with candidate
         for ally in ally_picks:
-            ally_info = self.synergies.get(ally, {})
+            ally_info = self.team_combo.get(ally, {})
             for item in ally_info.get("good_with", []):
                 if item.get("champion") == candidate_id:
                     pair_key = tuple(sorted([candidate_id, ally]))

@@ -1,0 +1,47 @@
+{
+  "sources": [
+    {
+      "name": "LoLalytics",
+      "domain": "lolalytics.com",
+      "type": "stats_site",
+      "enabled": true,
+      "use_for": ["champion_strength", "counter_relation"]
+    },
+    {
+      "name": "U.GG",
+      "domain": "u.gg",
+      "type": "stats_site",
+      "enabled": true,
+      "use_for": ["champion_strength", "counter_relation"]
+    },
+    {
+      "name": "OP.GG",
+      "domain": "op.gg",
+      "type": "stats_site",
+      "enabled": true,
+      "use_for": ["champion_strength", "counter_relation"]
+    },
+    {
+      "name": "League of Graphs",
+      "domain": "leagueofgraphs.com",
+      "type": "stats_site",
+      "enabled": true,
+      "use_for": ["champion_strength", "counter_relation"]
+    },
+    {
+      "name": "Reddit SummonerSchool",
+      "domain": "reddit.com",
+      "type": "forum_text",
+      "enabled": true,
+      "use_for": ["matchup_note", "subjective_strength", "lane_tips"],
+      "extra_keywords": ["summonerschool"]
+    },
+    {
+      "name": "NGA",
+      "domain": "bbs.nga.cn",
+      "type": "forum_text",
+      "enabled": true,
+      "use_for": ["matchup_note", "subjective_strength", "meta_opinion"]
+    }
+  ]
+}

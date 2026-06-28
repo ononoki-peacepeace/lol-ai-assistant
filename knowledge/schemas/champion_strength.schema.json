@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Champion Strength Candidates",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "type",
+      "champion",
+      "role",
+      "score",
+      "score_type",
+      "confidence",
+      "source_type",
+      "raw_evidence",
+      "tags",
+      "reason"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "type": {
+        "const": "champion_strength"
+      },
+      "champion": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string",
+        "enum": ["上单", "打野", "中单", "下路", "辅助", "unknown"]
+      },
+      "tier": {
+        "type": ["string", "null"],
+        "enum": ["S", "A", "B", "C", "D", "unknown", null],
+        "default": "unknown"
+      },
+      "score": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10
+      },
+      "score_type": {
+        "type": "string",
+        "enum": ["subjective_strength", "stat_strength", "pro_priority", "matchup_difficulty"]
+      },
+      "confidence": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "patch": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "rank_scope": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "source_type": {
+        "type": "string",
+        "enum": ["stats_site", "forum_text", "guide", "pro_data", "manual_text", "mixed"]
+      },
+      "source_refs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "raw_evidence": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "evidence": {
+        "type": "object",
+        "properties": {
+          "win_rate": {
+            "type": ["number", "null"]
+          },
+          "sample_size": {
+            "type": ["integer", "null"]
+          },
+          "pick_rate": {
+            "type": ["number", "null"]
+          },
+          "ban_rate": {
+            "type": ["number", "null"]
+          },
+          "opinion_count": {
+            "type": ["integer", "null"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "weaknesses": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "reason": {
+        "type": "string"
+      },
+      "review_status": {
+        "type": "string",
+        "enum": ["pending", "approved", "rejected"],
+        "default": "pending"
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Counter Relation Candidates",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "type",
+      "candidate",
+      "target",
+      "role",
+      "scope",
+      "direction",
+      "score",
+      "confidence",
+      "source_type",
+      "raw_evidence",
+      "reason"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "type": {
+        "const": "counter_relation"
+      },
+      "candidate": {
+        "type": "string",
+        "description": "被推荐或被评价的英雄，例如 Malphite"
+      },
+      "target": {
+        "type": "string",
+        "description": "被克制或克制 candidate 的目标英雄，例如 Darius"
+      },
+      "role": {
+        "type": "string",
+        "enum": ["上单", "打野", "中单", "下路", "辅助", "unknown"]
+      },
+      "scope": {
+        "type": "string",
+        "enum": ["lane", "teamfight", "overall"]
+      },
+      "direction": {
+        "type": "string",
+        "enum": ["good_against", "bad_against"]
+      },
+      "score": {
+        "type": "integer",
+        "minimum": -5,
+        "maximum": 5
+      },
+      "confidence": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "patch": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "rank_scope": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "source_type": {
+        "type": "string",
+        "enum": ["stats_site", "forum_text", "guide", "pro_data", "manual_text", "mixed"]
+      },
+      "source_refs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "raw_evidence": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "evidence": {
+        "type": "object",
+        "properties": {
+          "win_rate": {
+            "type": ["number", "null"]
+          },
+          "sample_size": {
+            "type": ["integer", "null"]
+          },
+          "pick_rate": {
+            "type": ["number", "null"]
+          },
+          "ban_rate": {
+            "type": ["number", "null"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "reason": {
+        "type": "string"
+      },
+      "review_status": {
+        "type": "string",
+        "enum": ["pending", "approved", "rejected"],
+        "default": "pending"
+      }
+    },
+    "additionalProperties": false
+  }
+}

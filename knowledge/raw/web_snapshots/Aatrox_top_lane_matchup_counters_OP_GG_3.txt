@@ -1,0 +1,195 @@
+查询主题：Aatrox top lane matchup counters
+
+    来源名称：OP.GG
+    来源类型：stats_site
+    来源域名：op.gg
+    网页标题：Aatrox Build - Highest Win Rate Builds, Runes, and Items - OP.GG
+    网页URL：https://op.gg/lol/champions/aatrox/build
+
+    正文：
+    Stats
+League of Legends Teamfight Tactics Valorant OVERWATCH2 PUBG 2XKO SoonMarvel Rivals BetaFortnite BetaCounter Strike 2 BetaArc Raiders BetaROBLOX BetaPokémon Pokopia BetaSlay The Spire 2 BetaTime Takers SoonPokémon Champions BetaDiablo 4 Soon
+Tired of searching for everything while playing ARC Raiders? From items to event timers and the marketplace — find it all on OP.GG.
+DesktopGamesNewDuoTalkGEsportsGigsStreamer OverlayNew
+League of LegendsTeamfight TacticsValorantOVERWATCH2PUBGSoon2XKOBetaMarvel RivalsBetaFortniteBetaCounter Strike 2BetaArc RaidersBetaROBLOXBetaPokémon PokopiaBetaSlay The Spire 2SoonTime TakersBetaPokémon ChampionsSoonDiablo 4
+---
+DesktopNewGamesDuoTalkGEsportsGigsNewStreamer Overlay
+Register pro player tagHelp center
+[](/)
+85%15%
+# **Aatrox** Build for Top, Patch 16.13
+2 Tier
+**E**
+**R**
+* *Win rate***48.80%**
+* *Pick rate***7.98%**
+* *Ban rate***6.83%**
+**User-written champion tips**
+Beta
+Use Umbral Dash while casting The Darkin Blade to increase your accuracy.\nCoordinate with crowd control effects to land your abilities more reliably.\nActivate World Ender when you are ready to engage in combat.
+* *Win rate***48.80%**
+* *Pick rate***7.98%**
+* *Ban rate***6.83%**
+ADVERTISEMENT
+**Remove ads**
+ADVERTISEMENT
+**Remove ads**
+* Ranked Solo/Duo
+* Ranked Flex
+* ARAM
+* ArenaU
+Auto rune setting
+Automatically set your runes to the highest win-rate configuration!
+Download desktop
+Aatroxrunes
+**100%****0.1%**1
+**75%****0.3%**4
+**33.3%****0.2%**3
+**48.5%****89.1%**1,122
+**40%****1.2%**15
+**48.7%****88.5%**1,115
+**0%****0%**0
+**58.1%****14.2%**179
+**46.8%****75.2%**947
+**50%****0.3%**4
+**33.3%****0.5%**6
+**33.3%****1.2%**15
+**48.9%****88%**1,109
+Precision
+**46.2%****1%**13
+**16.7%****0.5%**6
+**0%****0.1%**1
+**76.9%****1%**13
+**44.1%****24.7%**311
+**50%****62.7%**790
+**49.7%****12.3%**155
+**47.6%****65.7%**828
+**52.7%****10.2%**129
+Resolve
+**49.8%****84.9%**1,070
+**43.2%****14.7%**185
+**20%****0.4%**5
+**48.6%****99.1%**1,248
+**40%****0.4%**5
+**85.7%****0.6%**7
+**49.4%****24.9%**314
+**37.5%****1.9%**24
+**48.8%****73.2%**922
+Shards
+**49.8%****84.9%**1,070
+**43.2%****14.7%**185
+**20%****0.4%**5
+**48.6%****99.1%**1,248
+**40%****0.4%**5
+**85.7%****0.6%**7
+**49.4%****24.9%**314
+**37.5%****1.9%**24
+**48.8%****73.2%**922
+Shards
+**100%****0.1%**1
+**75%****0.3%**4
+**33.3%****0.2%**3
+**48.5%****89.1%**1,122
+**40%****1.2%**15
+**48.7%****88.5%**1,115
+**0%****0%**0
+**58.1%****14.2%**179
+**46.8%****75.2%**947
+**50%****0.3%**4
+**33.3%****0.5%**6
+**33.3%****1.2%**15
+**48.9%****88%**1,109
+Precision
+**46.2%****1%**13
+**16.7%****0.5%**6
+**0%****0.1%**1
+**76.9%****1%**13
+**44.1%****24.7%**311
+**50%****62.7%**790
+**49.7%****12.3%**155
+**47.6%****65.7%**828
+**52.7%****10.2%**129
+Resolve
+**49.8%****84.9%**1,070
+**43.2%****14.7%**185
+**20%****0.4%**5
+**48.6%****99.1%**1,248
+**40%****0.4%**5
+**85.7%****0.6%**7
+**49.4%****24.9%**314
+**37.5%****1.9%**24
+**48.8%****73.2%**922
+Shards
+ADVERTISEMENT
+**Remove ads**
+AatroxSummoner spellsbuilds
+SummonerSpells Table
+| Summoner spells | Pick rate | Win rate |
+| **53.28**675 Games | **50.37%** |
+SummonerSpells Table
+| Summoner spells | Pick rate | Win rate |
+| **40.88**518 Games | **47.1%** |
+AatroxSkill order
+SkillOrder Table
+| Skill order | Pick rate | Win rate |
+| The Darkin Blade**Q**  Umbral Dash**E**  Infernal Chains**W**  **Q****E****W****Q****Q****R****Q****E****Q****E****R****E****E****W****W** | **82.8%**679 Games | **55.23%** |
+AatroxItem builds
+Items Table
+| Starter items |
+| **52.03%**614 Games | **47.56%** |
+| **40.25%**475 Games | **50.11%** |
+Boots Table
+| Boots |
+| **69.94%**756 Games | **48.28%** |
+| **24.7%**267 Games | **48.31%** |
+Builds Table
+| Core builds |
+| **10.74%**52 Games | **61.54%** |
+| **6.2%**30 Games | **53.33%** |
+| **4.55%**22 Games | **40.91%** |
+| **2.89%**14 Games | **42.86%** |
+| **2.89%**14 Games | **42.86%** |
+Depth 4 Items Table
+| Fourth Item |
+| **34.38%**32 Games |
+| **65%**20 Games |
+| **68.75%**16 Games |
+| **60%**15 Games |
+| **58.33%**12 Games |
+Depth 5 Items Table
+| Fifth Item |
+| **50%**4 Games |
+| **66.67%**3 Games |
+| **66.67%**3 Games |
+| **100%**3 Games |
+| **33.33%**3 Games |
+Depth 6 Items Table
+| Sixth Item |
+| **0%**1 Games |
+ADVERTISEMENT
+**Remove ads**
+AatroxCounter
+Weak against
+* **35.48%**31Games
+* **36.73%**49Games
+* **37.04%**54Games
+* **43.59%**39Games
+Strong against
+* **63.04%**46Games
+* **60%**30Games
+* **54.29%**35Games
+* **51.67%**60Games
+* **51.28%**39Games
+Top AatroxSynergies
+Aatroxmastery ranking
+1. 1
+2. 2
+3. 3
+4. 4
+5. 5
+ADVERTISEMENT
+**Remove ads**
+ADVERTISEMENT
+**Remove ads**
+ADVERTISEMENT
+**Remove ads**

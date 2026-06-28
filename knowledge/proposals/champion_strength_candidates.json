@@ -1,0 +1,27 @@
+[
+  {
+    "id": "champion_strength_001",
+    "type": "champion_strength",
+    "champion": "Darius",
+    "role": "上单",
+    "tier": null,
+    "score": 8,
+    "score_type": "subjective_strength",
+    "confidence": "low",
+    "patch": "unknown",
+    "rank_scope": "unknown",
+    "source_type": "forum_text",
+    "source_refs": [],
+    "raw_evidence": [
+      "诺手太难打了，近战上单被他拉到基本就炸线，前期压力特别大。"
+    ],
+    "evidence": {},
+    "tags": [
+      "压制力",
+      "线霸",
+      "对线强势"
+    ],
+    "weaknesses": [],
+    "reason": "用户主观描述诺手在对线近战上单时强度极高，能轻易造成炸线，属于玩家观点，confidence为low。"
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Team Combo Candidates",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "type",
+      "name",
+      "combo_type",
+      "score",
+      "confidence",
+      "source_type",
+      "raw_evidence",
+      "reason"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "type": {
+        "const": "team_combo"
+      },
+      "name": {
+        "type": "string"
+      },
+      "combo_type": {
+        "type": "string",
+        "enum": [
+          "teamfight_combo",
+          "protect_carry",
+          "dive_combo",
+          "poke_comp",
+          "pick_comp",
+          "split_push",
+          "front_to_back",
+          "early_snowball",
+          "general"
+        ]
+      },
+      "core_champions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "required_all": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "required_any": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "min_required_any": {
+        "type": "integer",
+        "minimum": 0,
+        "default": 0
+      },
+      "optional_champions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "required_tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "optional_tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "roles": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["上单", "打野", "中单", "下路", "辅助", "unknown"]
+        },
+        "default": []
+      },
+      "style": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "score": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "confidence": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "patch": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "rank_scope": {
+        "type": "string",
+        "default": "unknown"
+      },
+      "source_type": {
+        "type": "string",
+        "enum": ["stats_site", "forum_text", "guide", "pro_data", "manual_text", "mixed"]
+      },
+      "source_refs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": []
+      },
+      "raw_evidence": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "evidence": {
+        "type": "object",
+        "properties": {
+          "games_seen": {
+            "type": ["integer", "null"]
+          },
+          "win_rate": {
+            "type": ["number", "null"]
+          },
+          "opinion_count": {
+            "type": ["integer", "null"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "reason": {
+        "type": "string"
+      },
+      "review_status": {
+        "type": "string",
+        "enum": ["pending", "approved", "rejected"],
+        "default": "pending"
+      }
+    },
+    "additionalProperties": false
+  }
+}

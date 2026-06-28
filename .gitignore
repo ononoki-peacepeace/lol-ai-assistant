@@ -11,3 +11,17 @@ assets/champions/
 
 .DS_Store
 .vscode/
+
+
+# Runtime data / cache
+knowledge/raw/
+knowledge/bp/*.bak.*
+knowledge/proposals/merge_state.json
+knowledge/search/bp_search_jobs.json
+knowledge/search/planned_bp_search_jobs.json
+
+
+
+# Local temporary files
+*.log
+*.tmp

@@ -3,7 +3,7 @@ import json
 import os
 import re
 from pathlib import Path
-
+import sys
 from tavily import TavilyClient
 
 from generate_proposal_from_text import (
@@ -14,7 +14,12 @@ from generate_proposal_from_text import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SOURCES_PATH = PROJECT_ROOT / "knowledge" / "sources" / "knowledge_sources.json"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+GENERATE_SCRIPT = ROOT_DIR / "tools" / "knowledge" / "generate_proposal_from_sources.py"
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
+import config  # noqa: F401
 
 def load_json(path: Path, default=None):
     if default is None:

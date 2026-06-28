@@ -15,6 +15,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = PROJECT_ROOT / "configs" / "llm_config.json"
 SCHEMA_DIR = PROJECT_ROOT / "knowledge" / "schemas"
 PROPOSAL_DIR = PROJECT_ROOT / "knowledge" / "proposals"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+GENERATE_SCRIPT = ROOT_DIR / "tools" / "knowledge" / "generate_proposal_from_sources.py"
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+import config  # noqa: F401
 
 
 KIND_CONFIG = {

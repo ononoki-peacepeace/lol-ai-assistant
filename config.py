@@ -7,7 +7,37 @@ import os
 # 基础路径
 # =========================
 
+import os
+from pathlib import Path
+
 BASE_DIR = Path(__file__).resolve().parent
+
+
+def load_env_file(env_path: Path | None = None):
+    if env_path is None:
+        env_path = BASE_DIR / ".env"
+
+    if not env_path.exists():
+        return
+
+    for line in env_path.read_text(encoding="utf-8-sig").splitlines():
+        line = line.strip()
+
+        if not line or line.startswith("#"):
+            continue
+
+        if "=" not in line:
+            continue
+
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+load_env_file()
 
 DATA_DIR = BASE_DIR / "data"
 ASSETS_DIR = BASE_DIR / "assets"
@@ -100,7 +130,7 @@ CONFIRM_FRAMES = 3
 
 # 模板统一尺寸
 TEMPLATE_SIZE = 96
-
+BAN_TEMPLATE_SIZE = 40
 # 有些旧代码可能用这个名字
 IMAGE_SIZE = TEMPLATE_SIZE
 

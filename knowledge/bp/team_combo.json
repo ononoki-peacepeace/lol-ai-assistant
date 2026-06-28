@@ -1,528 +1,132 @@
-{
-  "Orianna": {
-    "good_with": [
-      {
-        "champion": "Malphite",
-        "score": 3,
-        "reason": "墨菲特进场后可以配合发条大招打出团战控制链。"
-      },
-      {
-        "champion": "JarvanIV",
-        "score": 3,
-        "reason": "皇子大招能限制敌方走位，方便发条接大。"
-      },
-      {
-        "champion": "Wukong",
-        "score": 3,
-        "reason": "猴子进场和击飞可以很好配合发条打团。"
-      },
-      {
-        "champion": "Nocturne",
-        "score": 2,
-        "reason": "梦魇关灯进场可以制造混乱，给发条创造大招机会。"
-      }
-    ]
+[
+  {
+    "id": "combo_malphite_yasuo_001",
+    "type": "team_combo",
+    "combo_type": "wombo_combo",
+    "champions": ["Malphite", "Yasuo"],
+    "roles": ["上单", "中单"],
+    "score": 9,
+    "confidence": "high",
+    "source_type": "manual_seed",
+    "tags": ["击飞", "强开", "团控", "爆发"],
+    "reason": "石头人大招可以稳定击飞目标，为亚索接大创造条件。",
+    "review_status": "approved"
   },
-
-  "Yasuo": {
-    "good_with": [
-      {
-        "champion": "Malphite",
-        "score": 3,
-        "reason": "墨菲特大招击飞稳定，可以帮助亚索接大。"
-      },
-      {
-        "champion": "Alistar",
-        "score": 3,
-        "reason": "牛头有稳定击飞和开团，可以给亚索创造进场机会。"
-      },
-      {
-        "champion": "Gragas",
-        "score": 2,
-        "reason": "酒桶大招和 E 技能都能提供击飞效果，适合配合亚索。"
-      },
-      {
-        "champion": "Diana",
-        "score": 2,
-        "reason": "皎月进场聚人后，亚索可以更容易跟进输出。"
-      },
-      {
-        "champion": "Yone",
-        "score": 2,
-        "reason": "永恩和亚索都有强团战进场能力，可以形成双进场压力。"
-      }
-    ]
+  {
+    "id": "combo_camille_galio_001",
+    "type": "team_combo",
+    "combo_type": "dive_combo",
+    "champions": ["Camille", "Galio"],
+    "roles": ["上单", "中单"],
+    "score": 9,
+    "confidence": "high",
+    "source_type": "manual_seed",
+    "tags": ["进场", "锁定", "控制链", "抓机会"],
+    "reason": "青钢影大招锁人后，加里奥可以跟进大招形成稳定进场和控制链。",
+    "review_status": "approved"
   },
-
-  "MissFortune": {
-    "good_with": [
-      {
-        "champion": "Amumu",
-        "score": 3,
-        "reason": "阿木木大招可以长时间控制多人，女枪可以安全打满大招。"
-      },
-      {
-        "champion": "Leona",
-        "score": 3,
-        "reason": "蕾欧娜强开和控制链可以帮助女枪大招命中更多目标。"
-      },
-      {
-        "champion": "Nautilus",
-        "score": 3,
-        "reason": "泰坦先手稳定，能给女枪创造大招输出空间。"
-      },
-      {
-        "champion": "Rell",
-        "score": 3,
-        "reason": "芮尔进场聚人后，女枪大招可以打出很高团战伤害。"
-      },
-      {
-        "champion": "Seraphine",
-        "score": 2,
-        "reason": "萨勒芬妮大招和控制可以帮助女枪接大打团。"
-      }
-    ]
+  {
+    "id": "combo_ornn_jinx_001",
+    "type": "team_combo",
+    "combo_type": "front_to_back",
+    "champions": ["Ornn", "Jinx"],
+    "roles": ["上单", "下路"],
+    "score": 8,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["前排", "开团", "保护核心", "持续输出"],
+    "reason": "奥恩提供前排和先手控制，能为金克丝创造持续输出环境。",
+    "review_status": "approved"
   },
-
-  "Jinx": {
-    "good_with": [
-      {
-        "champion": "Lulu",
-        "score": 3,
-        "reason": "璐璐能提供护盾、加速和变羊，保护金克丝持续输出。"
-      },
-      {
-        "champion": "Janna",
-        "score": 3,
-        "reason": "风女保护和反开能力强，能给金克丝创造安全输出环境。"
-      },
-      {
-        "champion": "Thresh",
-        "score": 2,
-        "reason": "锤石灯笼和控制能提高金克丝的容错率。"
-      },
-      {
-        "champion": "Braum",
-        "score": 2,
-        "reason": "布隆可以保护金克丝正面输出，也能提供反开控制。"
-      }
-    ]
+  {
+    "id": "combo_malphite_missfortune_001",
+    "type": "team_combo",
+    "combo_type": "wombo_combo",
+    "champions": ["Malphite", "MissFortune"],
+    "roles": ["上单", "下路"],
+    "score": 8,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["强开", "团控", "范围伤害"],
+    "reason": "石头人大招开团后，女枪大招可以接范围伤害打团战爆发。",
+    "review_status": "approved"
   },
-
-  "KogMaw": {
-    "good_with": [
-      {
-        "champion": "Lulu",
-        "score": 3,
-        "reason": "璐璐是大嘴经典保护搭档，可以极大提升大嘴输出环境。"
-      },
-      {
-        "champion": "Janna",
-        "score": 3,
-        "reason": "风女能保护大嘴不被突进切死，适合保护核心阵容。"
-      },
-      {
-        "champion": "Milio",
-        "score": 2,
-        "reason": "米利欧可以提高射程并提供保护，适合大嘴持续输出。"
-      }
-    ]
+  {
+    "id": "combo_aatrox_sejuani_001",
+    "type": "team_combo",
+    "combo_type": "skirmish_combo",
+    "champions": ["Aatrox", "Sejuani"],
+    "roles": ["上单", "打野"],
+    "score": 7,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["近战", "控制", "持续作战", "前排"],
+    "reason": "剑魔和猪妹都适合中前期小规模团，能提供前排、控制和持续作战能力。",
+    "review_status": "approved"
   },
-
-  "Twitch": {
-    "good_with": [
-      {
-        "champion": "Lulu",
-        "score": 3,
-        "reason": "璐璐能保护老鼠隐身进场后的输出窗口。"
-      },
-      {
-        "champion": "Yuumi",
-        "score": 2,
-        "reason": "悠米能跟随老鼠进场，增强他的爆发和生存能力。"
-      }
-    ]
+  {
+    "id": "combo_jax_lulu_001",
+    "type": "team_combo",
+    "combo_type": "carry_enhance",
+    "champions": ["Jax", "Lulu"],
+    "roles": ["上单", "辅助"],
+    "score": 7,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["单带", "保护", "攻速", "后期"],
+    "reason": "贾克斯作为后期近战核心，能从璐璐的保护、加速和大招中获得较高收益。",
+    "review_status": "approved"
   },
-
-  "Lucian": {
-    "good_with": [
-      {
-        "champion": "Nami",
-        "score": 3,
-        "reason": "娜美能强化卢锡安的短换血和爆发，是经典下路组合。"
-      },
-      {
-        "champion": "Milio",
-        "score": 2,
-        "reason": "米利欧可以增强卢锡安的输出距离和保护能力。"
-      }
-    ]
+  {
+    "id": "combo_fiora_twistedfate_001",
+    "type": "team_combo",
+    "combo_type": "side_lane_pick",
+    "champions": ["Fiora", "TwistedFate"],
+    "roles": ["上单", "中单"],
+    "score": 7,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["单带", "抓边", "支援", "分推"],
+    "reason": "剑姬单带牵制时，卡牌可以通过大招支援边路，增强抓边和分推压力。",
+    "review_status": "approved"
   },
-
-  "Xayah": {
-    "good_with": [
-      {
-        "champion": "Rakan",
-        "score": 3,
-        "reason": "霞洛是经典组合，洛可以开团和保护，霞能稳定跟输出。"
-      }
-    ]
+  {
+    "id": "combo_ornn_orianna_001",
+    "type": "team_combo",
+    "combo_type": "teamfight_combo",
+    "champions": ["Ornn", "Orianna"],
+    "roles": ["上单", "中单"],
+    "score": 8,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["开团", "团控", "范围爆发"],
+    "reason": "奥恩先手开团后，发条可以跟进大招打范围控制和爆发。",
+    "review_status": "approved"
   },
-
-  "Rakan": {
-    "good_with": [
-      {
-        "champion": "Xayah",
-        "score": 3,
-        "reason": "霞洛组合拥有更好的进退和团战配合。"
-      },
-      {
-        "champion": "Yasuo",
-        "score": 2,
-        "reason": "洛的击飞和开团可以帮助亚索接大。"
-      },
-      {
-        "champion": "Orianna",
-        "score": 2,
-        "reason": "洛进场开团后，发条可以接大打控制链。"
-      }
-    ]
+  {
+    "id": "combo_malphite_orianna_001",
+    "type": "team_combo",
+    "combo_type": "wombo_combo",
+    "champions": ["Malphite", "Orianna"],
+    "roles": ["上单", "中单"],
+    "score": 8,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["强开", "团控", "范围爆发"],
+    "reason": "石头人大招进场可以为发条大招创造多人命中机会。",
+    "review_status": "approved"
   },
-
-  "Kalista": {
-    "good_with": [
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "卡莉斯塔大招可以帮助蕾欧娜强行进场开团。"
-      },
-      {
-        "champion": "Nautilus",
-        "score": 2,
-        "reason": "卡莉斯塔可以把泰坦送进场，形成稳定先手。"
-      },
-      {
-        "champion": "Alistar",
-        "score": 2,
-        "reason": "牛头被卡莉斯塔大招送进场后，可以接控制链。"
-      },
-      {
-        "champion": "Renata",
-        "score": 2,
-        "reason": "烈娜塔能提高卡莉斯塔的团战容错率和反打能力。"
-      }
-    ]
-  },
-
-  "Aphelios": {
-    "good_with": [
-      {
-        "champion": "Thresh",
-        "score": 3,
-        "reason": "锤石灯笼可以弥补厄斐琉斯缺少位移的问题。"
-      },
-      {
-        "champion": "Lulu",
-        "score": 2,
-        "reason": "璐璐能保护厄斐琉斯打出后期团战输出。"
-      },
-      {
-        "champion": "Janna",
-        "score": 2,
-        "reason": "风女能提供保护和反开，帮助厄斐琉斯站住输出。"
-      }
-    ]
-  },
-
-  "Diana": {
-    "good_with": [
-      {
-        "champion": "Yasuo",
-        "score": 3,
-        "reason": "皎月进场聚人后，亚索可以跟进打出高额团战伤害。"
-      },
-      {
-        "champion": "MissFortune",
-        "score": 2,
-        "reason": "皎月大招聚人后，女枪可以接大打范围伤害。"
-      },
-      {
-        "champion": "Orianna",
-        "score": 2,
-        "reason": "皎月进场可以带发条球切入敌阵，形成团战爆发。"
-      }
-    ]
-  },
-
-  "JarvanIV": {
-    "good_with": [
-      {
-        "champion": "Orianna",
-        "score": 3,
-        "reason": "皇子大招限制敌方位置，发条可以接大打团战爆发。"
-      },
-      {
-        "champion": "MissFortune",
-        "score": 2,
-        "reason": "皇子框住敌人后，女枪大招更容易命中。"
-      },
-      {
-        "champion": "Galio",
-        "score": 2,
-        "reason": "皇子进场后，加里奥可以大招跟进形成强开。"
-      }
-    ]
-  },
-
-  "Camille": {
-    "good_with": [
-      {
-        "champion": "Galio",
-        "score": 3,
-        "reason": "青钢影大招留人后，加里奥可以大招跟进形成经典进场组合。"
-      },
-      {
-        "champion": "TwistedFate",
-        "score": 2,
-        "reason": "卡牌和青钢影可以一起抓边路，形成强单点压制。"
-      }
-    ]
-  },
-
-  "Galio": {
-    "good_with": [
-      {
-        "champion": "Camille",
-        "score": 3,
-        "reason": "青钢影先手锁人后，加里奥能大招跟进打控制链。"
-      },
-      {
-        "champion": "JarvanIV",
-        "score": 2,
-        "reason": "皇子进场后，加里奥能及时跟进保护和控制。"
-      },
-      {
-        "champion": "Nocturne",
-        "score": 2,
-        "reason": "梦魇进场后，加里奥可以大招跟进形成双进场。"
-      },
-      {
-        "champion": "Vi",
-        "score": 2,
-        "reason": "蔚锁定目标进场后，加里奥可以跟进补控制和保护。"
-      }
-    ]
-  },
-
-  "Nocturne": {
-    "good_with": [
-      {
-        "champion": "Galio",
-        "score": 2,
-        "reason": "梦魇关灯进场后，加里奥可以大招跟进形成强切入。"
-      },
-      {
-        "champion": "Shen",
-        "score": 2,
-        "reason": "慎可以大招跟随梦魇进场，提高梦魇切后排的容错率。"
-      },
-      {
-        "champion": "TwistedFate",
-        "score": 2,
-        "reason": "梦魇和卡牌都能快速支援边路，适合抓单和带节奏。"
-      }
-    ]
-  },
-
-  "TwistedFate": {
-    "good_with": [
-      {
-        "champion": "Nocturne",
-        "score": 2,
-        "reason": "卡牌和梦魇都有远距离支援能力，可以形成边路抓人压力。"
-      },
-      {
-        "champion": "Camille",
-        "score": 2,
-        "reason": "卡牌黄牌配合青钢影大招，边路抓单能力很强。"
-      },
-      {
-        "champion": "Shen",
-        "score": 2,
-        "reason": "慎和卡牌都能远程支援，适合打边路节奏。"
-      }
-    ]
-  },
-
-  "Shen": {
-    "good_with": [
-      {
-        "champion": "Nocturne",
-        "score": 2,
-        "reason": "慎可以大招跟随梦魇进场，提高切入容错率。"
-      },
-      {
-        "champion": "Kaisa",
-        "score": 2,
-        "reason": "慎可以保护卡莎进场，帮助她打收割和切后排。"
-      },
-      {
-        "champion": "Twitch",
-        "score": 2,
-        "reason": "慎可以给老鼠进场提供保护，增强其团战容错率。"
-      }
-    ]
-  },
-
-  "Kaisa": {
-    "good_with": [
-      {
-        "champion": "Nautilus",
-        "score": 2,
-        "reason": "泰坦稳定控制可以帮助卡莎挂被动并跟进输出。"
-      },
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "蕾欧娜控制链可以帮助卡莎快速打出被动。"
-      },
-      {
-        "champion": "Shen",
-        "score": 2,
-        "reason": "慎可以保护卡莎进场，提升她切入后的生存能力。"
-      }
-    ]
-  },
-
-  "Samira": {
-    "good_with": [
-      {
-        "champion": "Nautilus",
-        "score": 3,
-        "reason": "泰坦控制稳定，能帮助莎弥拉进场叠被动并收割。"
-      },
-      {
-        "champion": "Leona",
-        "score": 3,
-        "reason": "蕾欧娜强开和控制链很适合莎弥拉跟进。"
-      },
-      {
-        "champion": "Rell",
-        "score": 3,
-        "reason": "芮尔进场聚人后，莎弥拉可以更容易打出大招收割。"
-      },
-      {
-        "champion": "Alistar",
-        "score": 2,
-        "reason": "牛头提供击飞和控制，能帮助莎弥拉安全进场。"
-      }
-    ]
-  },
-
-  "Tristana": {
-    "good_with": [
-      {
-        "champion": "Rell",
-        "score": 2,
-        "reason": "芮尔强开后，小炮可以快速跟进打爆发。"
-      },
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "蕾欧娜控制链能帮助小炮打出前期击杀压力。"
-      }
-    ]
-  },
-
-  "Ezreal": {
-    "good_with": [
-      {
-        "champion": "Karma",
-        "score": 2,
-        "reason": "卡尔玛能增强伊泽瑞尔的消耗和线权能力。"
-      },
-      {
-        "champion": "Yuumi",
-        "score": 2,
-        "reason": "悠米能提高伊泽瑞尔的机动性和拉扯能力。"
-      }
-    ]
-  },
-
-  "Caitlyn": {
-    "good_with": [
-      {
-        "champion": "Lux",
-        "score": 3,
-        "reason": "女警和拉克丝线权强，夹子和控制可以形成很强压制。"
-      },
-      {
-        "champion": "Morgana",
-        "score": 2,
-        "reason": "莫甘娜控制命中后，女警可以接夹子打压制。"
-      },
-      {
-        "champion": "Karma",
-        "score": 2,
-        "reason": "卡尔玛能帮助女警打线权和塔下压制。"
-      }
-    ]
-  },
-
-  
-
-  "Draven": {
-    "good_with": [
-      {
-        "champion": "Nautilus",
-        "score": 2,
-        "reason": "泰坦先手稳定，能帮助德莱文打出线杀。"
-      },
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "蕾欧娜控制链强，适合配合德莱文打前期压制。"
-      },
-      {
-        "champion": "Thresh",
-        "score": 2,
-        "reason": "锤石兼具控制和保护，适合帮助德莱文扩大优势。"
-      }
-    ]
-  },
-
-  "Vayne": {
-    "good_with": [
-      {
-        "champion": "Lulu",
-        "score": 2,
-        "reason": "璐璐能提高薇恩的生存能力和持续输出空间。"
-      },
-      {
-        "champion": "Janna",
-        "score": 2,
-        "reason": "风女保护能力强，能帮助薇恩度过团战进场压力。"
-      }
-    ]
-  },
-
-  "Zeri": {
-    "good_with": [
-      {
-        "champion": "Yuumi",
-        "score": 2,
-        "reason": "悠米能增强泽丽的机动和持续作战能力。"
-      },
-      {
-        "champion": "Lulu",
-        "score": 2,
-        "reason": "璐璐能保护泽丽并增强她的持续输出。"
-      },
-      {
-        "champion": "Milio",
-        "score": 2,
-        "reason": "米利欧能提高泽丽的输出距离和容错率。"
-      }
-    ]
+  {
+    "id": "combo_sion_senna_001",
+    "type": "team_combo",
+    "combo_type": "front_to_back",
+    "champions": ["Sion", "Senna"],
+    "roles": ["上单", "辅助"],
+    "score": 7,
+    "confidence": "medium",
+    "source_type": "manual_seed",
+    "tags": ["前排", "消耗", "保护", "拉扯"],
+    "reason": "塞恩提供前排和开路能力，赛娜可以在后方持续消耗和支援。",
+    "review_status": "approved"
   }
-}
+]

@@ -1,305 +1,421 @@
 {
-  "Malphite": {
+  "Aatrox": {
     "good_against": [
       {
-        "champion": "Yasuo",
+        "champion": "Vladimir",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "数据站显示剑魔上单对 Vladimir 有较好的对位表现。"
+      },
+      {
+        "champion": "Rumble",
+        "role": "上单",
         "score": 3,
-        "reason": "墨菲特护甲收益高，团战大招也能限制亚索进场。"
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "数据站显示剑魔上单对 Rumble 有一定 counter 价值。"
       },
       {
-        "champion": "Tryndamere",
-        "score": 2,
-        "reason": "墨菲特对依赖普攻的物理英雄有较好限制能力。"
-      },
-      {
-        "champion": "Irelia",
-        "score": 2,
-        "reason": "墨菲特护甲和减攻速能力能降低刀妹持续作战威胁。"
+        "champion": "Nasus",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "剑魔的对线压制和持续作战能力适合限制狗头发育。"
       }
     ],
     "bad_against": [
       {
-        "champion": "Sylas",
+        "champion": "Heimerdinger",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "数据站显示大头是剑魔上单较难处理的对位之一。"
+      },
+      {
+        "champion": "Poppy",
+        "role": "上单",
         "score": -3,
-        "reason": "塞拉斯可以偷墨菲特大招，团战反打威胁很高。"
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "波比能限制剑魔进场和位移节奏，对剑魔有反制价值。"
+      },
+      {
+        "champion": "Malphite",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "reason": "数据站显示石头人是剑魔较难处理的上单对位。"
       }
     ]
   },
-
-  "Rammus": {
+  "Darius": {
     "good_against": [
       {
-        "champion": "MasterYi",
-        "score": 3,
-        "reason": "拉莫斯护甲、嘲讽和反伤很克制依赖普攻输出的剑圣。"
+        "champion": "Poppy",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "reason": "诺手对短手近战有强压制能力，数据站显示其对 Poppy 有优势。"
       },
       {
-        "champion": "Tryndamere",
-        "score": 3,
-        "reason": "拉莫斯能用护甲和控制限制蛮王的普攻输出。"
-      },
-      {
-        "champion": "Yasuo",
-        "score": 2,
-        "reason": "拉莫斯对物理近战和普攻型英雄有较强限制能力。"
-      },
-      {
-        "champion": "Samira",
-        "score": 2,
-        "reason": "拉莫斯能限制莎弥拉近身输出，并用控制打断她的进场节奏。"
-      }
-    ],
-    "bad_against": [
-      {
-        "champion": "Lillia",
-        "score": -2,
-        "reason": "莉莉娅机动性高且以魔法持续伤害为主，拉莫斯不容易限制她。"
-      }
-    ]
-  },
-
-  "Morgana": {
-    "good_against": [
-      {
-        "champion": "Blitzcrank",
-        "score": 3,
-        "reason": "莫甘娜黑盾可以抵消机器人的关键钩子控制。"
-      },
-      {
-        "champion": "Nautilus",
-        "score": 2,
-        "reason": "黑盾可以降低泰坦先手控制的威胁。"
-      },
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "莫甘娜黑盾能保护队友免受蕾欧娜控制链影响。"
-      },
-      {
-        "champion": "Thresh",
-        "score": 2,
-        "reason": "黑盾可以应对锤石钩子和后续控制。"
-      }
-    ],
-    "bad_against": [
-      {
-        "champion": "Karma",
-        "score": -1,
-        "reason": "卡尔玛消耗和线权较强，莫甘娜不一定能靠黑盾取得优势。"
-      }
-    ]
-  },
-
-  "Janna": {
-    "good_against": [
-      {
-        "champion": "Leona",
-        "score": 2,
-        "reason": "风女的击退和反开能力可以限制蕾欧娜强开。"
-      },
-      {
-        "champion": "Rakan",
-        "score": 2,
-        "reason": "风女可以用控制和大招打断洛的进场。"
-      },
-      {
-        "champion": "Alistar",
-        "score": 2,
-        "reason": "风女反开能力强，可以限制牛头进场。"
-      },
-      {
-        "champion": "Diana",
-        "score": 2,
-        "reason": "风女可以保护后排，降低皎月冲阵威胁。"
-      }
-    ],
-    "bad_against": [
-      {
-        "champion": "Zyra",
-        "score": -2,
-        "reason": "婕拉线上消耗和控制强，风女容易被压线。"
-      }
-    ]
-  },
-
-  "Poppy": {
-    "good_against": [
-      {
-        "champion": "Camille",
-        "score": 3,
-        "reason": "波比可以用 W 限制青钢影进场和位移。"
-      },
-      {
-        "champion": "Irelia",
-        "score": 2,
-        "reason": "波比 W 能限制刀妹的突进节奏。"
+        "champion": "Sion",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "reason": "诺手持续作战和斩杀能力适合压制笨重坦克。"
       },
       {
         "champion": "Riven",
-        "score": 2,
-        "reason": "波比可以限制锐雯多段位移和进场。"
-      },
-      {
-        "champion": "LeeSin",
-        "score": 2,
-        "reason": "波比能限制盲僧二段 Q 和进场操作。"
-      }
-    ],
-    "bad_against": [
-      {
-        "champion": "Darius",
-        "score": -2,
-        "reason": "诺手正面持续作战能力强，波比不容易处理。"
-      }
-    ]
-  },
-
-  "Lissandra": {
-    "good_against": [
-      {
-        "champion": "Zed",
+        "role": "上单",
         "score": 3,
-        "reason": "丽桑卓控制和自保能力强，可以限制劫的进场爆发。"
-      },
-      {
-        "champion": "Akali",
-        "score": 2,
-        "reason": "丽桑卓稳定控制可以限制阿卡丽切入。"
-      },
-      {
-        "champion": "Katarina",
-        "score": 2,
-        "reason": "丽桑卓控制多，可以打断卡特进场和收割节奏。"
-      },
-      {
-        "champion": "Fizz",
-        "score": 2,
-        "reason": "丽桑卓有自保和控制，能降低小鱼人一套秒人的威胁。"
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "reason": "数据站显示诺手对 Riven 有一定优势，但该对位受熟练度影响较大。"
       }
     ],
     "bad_against": [
       {
-        "champion": "Xerath",
-        "score": -2,
-        "reason": "泽拉斯手长，丽桑卓容易被远程消耗。"
+        "champion": "Vladimir",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "reason": "吸血鬼能规避部分近战换血节奏，是诺手较难处理的对位。"
+      },
+      {
+        "champion": "Quinn",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://www.leagueofgraphs.com/champions/counters/darius"],
+        "reason": "奎因远程压制和机动性较强，能限制诺手近身。"
+      },
+      {
+        "champion": "Teemo",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://www.leagueofgraphs.com/champions/counters/darius"],
+        "reason": "提莫远程消耗和致盲会干扰诺手对线换血。"
       }
     ]
   },
-
-  "Galio": {
+  "Camille": {
     "good_against": [
       {
-        "champion": "Akali",
-        "score": 2,
-        "reason": "加里奥魔抗收益高，并且控制和支援能限制阿卡丽进场。"
+        "champion": "Yasuo",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "reason": "数据站显示青钢影对 Yasuo 上单有较好表现。"
       },
       {
-        "champion": "Leblanc",
-        "score": 2,
-        "reason": "加里奥对法系刺客有较好抗性和反打能力。"
+        "champion": "KSante",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "reason": "青钢影真伤和单带威胁适合处理部分坦克/战士型上单。"
       },
       {
-        "champion": "Diana",
-        "score": 2,
-        "reason": "加里奥可以用控制和大招应对皎月进场。"
+        "champion": "Gragas",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "reason": "数据站显示青钢影对 Gragas 有一定 counter 价值。"
       }
     ],
     "bad_against": [
       {
-        "champion": "Tristana",
-        "score": -2,
-        "reason": "小炮物理持续输出和推线能力强，加里奥对线压力较大。"
+        "champion": "Jax",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "reason": "贾克斯能用反击风暴限制青钢影普攻与换血节奏。"
+      },
+      {
+        "champion": "Teemo",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "reason": "提莫远程消耗和致盲会削弱青钢影对线换血。"
+      },
+      {
+        "champion": "Shen",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "reason": "慎的防御和支援能力能缓解青钢影单带压力。"
       }
     ]
   },
-
-  "Vayne": {
+  "Malphite": {
     "good_against": [
+      {
+        "champion": "Vayne",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "reason": "数据站显示石头人对 Vayne 上单有较好表现，护甲和强开能限制其输出环境。"
+      },
+      {
+        "champion": "Fiora",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "reason": "石头人的护甲、减攻速和团战价值能限制剑姬对线与团战发挥。"
+      },
+      {
+        "champion": "Tryndamere",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "reason": "石头人适合应对依赖普攻输出的上单。"
+      }
+    ],
+    "bad_against": [
       {
         "champion": "Ornn",
-        "score": 2,
-        "reason": "薇恩百分比真实伤害对高血量坦克威胁较大。"
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/counters/"],
+        "reason": "奥恩在坦克对位和团队功能上不怕石头人，数据站显示对位较有利。"
       },
       {
-        "champion": "Sion",
-        "score": 2,
-        "reason": "薇恩持续输出和真实伤害适合处理高血量前排。"
+        "champion": "Sylas",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/counters/"],
+        "reason": "塞拉斯可以偷取石头人大招，团战威胁很高。"
       },
       {
-        "champion": "DrMundo",
-        "score": 2,
-        "reason": "薇恩真实伤害能有效处理蒙多这类高血量英雄。"
-      },
-      {
-        "champion": "Chogath",
-        "score": 2,
-        "reason": "薇恩对高血量前排有较强处理能力。"
-      }
-    ],
-    "bad_against": [
-      {
-        "champion": "Caitlyn",
-        "score": -2,
-        "reason": "女警手长压制强，薇恩前期容易被压线。"
-      },
-      {
-        "champion": "Draven",
-        "score": -2,
-        "reason": "德莱文前期爆发和压制力强，薇恩对线压力大。"
+        "champion": "Kled",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "reason": "数据站显示克烈是石头人较难处理的对位之一。"
       }
     ]
   },
-
-  "Braum": {
+  "Jax": {
     "good_against": [
       {
-        "champion": "MissFortune",
-        "score": 2,
-        "reason": "布隆盾可以降低女枪大招和弹道技能的威胁。"
+        "champion": "Volibear",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "reason": "数据站显示贾克斯对 Volibear 上单有较好表现。"
       },
       {
-        "champion": "Lucian",
-        "score": 2,
-        "reason": "布隆可以挡卢锡安大招，并提供反打控制。"
+        "champion": "Trundle",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "reason": "贾克斯反击风暴和后期单带能力适合应对部分普攻型战士。"
       },
       {
-        "champion": "Ezreal",
-        "score": 1,
-        "reason": "布隆盾可以挡部分关键弹道技能。"
+        "champion": "Camille",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "reason": "数据站显示贾克斯是青钢影较难处理的对位。"
       }
     ],
     "bad_against": [
       {
-        "champion": "Zyra",
-        "score": -2,
-        "reason": "婕拉消耗和植物压制强，布隆容易被消耗。"
+        "champion": "DrMundo",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "reason": "数据站显示蒙多是贾克斯较难处理的上单对位。"
+      },
+      {
+        "champion": "Ornn",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "reason": "奥恩的坦度和控制能限制贾克斯进场和单带收益。"
+      },
+      {
+        "champion": "Garen",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "reason": "数据站显示盖伦对贾克斯有一定反制效果。"
       }
     ]
   },
-
   "Fiora": {
     "good_against": [
       {
-        "champion": "Sion",
-        "score": 2,
-        "reason": "剑姬适合处理笨重前排，能通过破绽持续消耗。"
+        "champion": "Kled",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "reason": "数据站显示剑姬对 Kled 有较好表现。"
       },
       {
-        "champion": "Ornn",
-        "score": 2,
-        "reason": "剑姬有单带和真实伤害能力，可以给奥恩边路压力。"
+        "champion": "Volibear",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/counters/?lane=top"],
+        "reason": "剑姬的单挑和真实伤害能力适合处理部分近战战士。"
       },
       {
-        "champion": "Chogath",
-        "score": 2,
-        "reason": "剑姬打高血量前排时有持续威胁。"
+        "champion": "KSante",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "reason": "剑姬对坦克/战士类上单有较强单带和拆解能力。"
       }
     ],
     "bad_against": [
       {
         "champion": "Malphite",
-        "score": -2,
-        "reason": "墨菲特护甲和减攻速会限制剑姬的普攻输出节奏。"
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "reason": "石头人的护甲、减攻速和团战先手会限制剑姬。"
+      },
+      {
+        "champion": "Heimerdinger",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "reason": "大头炮台和远程消耗会让剑姬较难稳定进场换血。"
+      },
+      {
+        "champion": "Tryndamere",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "reason": "蛮王的持续单挑和大招容错会给剑姬造成压力。"
+      }
+    ]
+  },
+  "Ornn": {
+    "good_against": [
+      {
+        "champion": "Malphite",
+        "role": "上单",
+        "score": 4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "reason": "数据站显示奥恩对石头人有较好表现，坦克对位中功能性更强。"
+      },
+      {
+        "champion": "Akali",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "reason": "奥恩坦度和控制可以限制阿卡丽的进场节奏。"
+      },
+      {
+        "champion": "Jax",
+        "role": "上单",
+        "score": 3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/counters/"],
+        "reason": "数据站显示奥恩对贾克斯有一定 counter 价值。"
+      }
+    ],
+    "bad_against": [
+      {
+        "champion": "Shen",
+        "role": "上单",
+        "score": -4,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "reason": "慎对奥恩有较好数据表现，且支援能力能影响边线节奏。"
+      },
+      {
+        "champion": "Poppy",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "reason": "波比能限制奥恩部分进场和位移节奏。"
+      },
+      {
+        "champion": "Garen",
+        "role": "上单",
+        "score": -3,
+        "confidence": "medium",
+        "source_type": "stats_site_manual",
+        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "reason": "数据站显示盖伦是奥恩较难处理的对位之一。"
       }
     ]
   }

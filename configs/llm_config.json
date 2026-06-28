@@ -3,8 +3,7 @@
   "model": "deepseek-v4-flash",
   "base_url": "https://api.deepseek.com",
   "api_key_env": "DEEPSEEK_API_KEY",
-  "stream": false,
-  "max_tokens": 2500,
-  "temperature": 0.7,
-  "character_card": "default_assistant"
+  "temperature": 0.2,
+  "max_tokens": 2000,
+  "profile": "deepseek"
 }

@@ -1,0 +1,32 @@
+{
+  "default": "deepseek",
+  "profiles": {
+    "deepseek": {
+    "provider": "openai_compatible",
+    "model": "deepseek-v4-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "temperature": 0.2,
+    "max_tokens": 2000
+    },
+    "ollama_qwen": {
+    "provider": "ollama",
+    "model": "qwen2.5:1.5b",
+    "host": "http://127.0.0.1:11434",
+    "stream": false,
+    "max_tokens": 2000,
+    "temperature": 0.2,
+    "character_card": "default_assistant"
+    },
+    "ollama_llama3": {
+    "provider": "ollama",
+    "model": "llama3:latest",
+    "host": "http://127.0.0.1:11434",
+    "stream": false,
+    "max_tokens": 1200,
+    "temperature": 0.1,
+    "num_ctx": 4096,
+    "character_card": "default_assistant"
+    }
+  }
+}

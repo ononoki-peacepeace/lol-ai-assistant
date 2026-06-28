@@ -108,7 +108,7 @@ class AICommentator:
             return "当前没有可推荐英雄。"
 
         main_pick = recommendations[0]
-        backup_picks = recommendations[1:3]
+        backup_picks = recommendations[:10]
 
         main_name = main_pick.get("name", main_pick.get("id"))
         main_id = main_pick.get("id")
@@ -147,7 +147,7 @@ class AICommentator:
         适合点：
         {chr(10).join("- " + p for p in main_points) if main_points else "暂无明确说明"}
 
-        备选英雄，必须分别解释：
+        备选英雄，数量为5到7个，必须分别解释：
         {chr(10).join(backup_lines) if backup_lines else "暂无备选"}
 
         请你像一个懂 BP 的队友一样，把上面的信息整理成人话。

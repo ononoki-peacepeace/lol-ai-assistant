@@ -1,0 +1,286 @@
+[
+  {
+    "champion": "Darius",
+    "role": "上单",
+    "score": 8,
+    "strength_score": 8,
+    "score_type": "subjective_strength",
+    "patch": "unknown",
+    "confidence": "low",
+    "source_type": "forum_text",
+    "reason": "用户主观描述诺手在对线近战上单时强度极高，能轻易造成炸线，属于玩家观点，confidence为low。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Kennen",
+    "role": "上单",
+    "score": 9,
+    "strength_score": 9,
+    "score_type": "matchup_difficulty",
+    "tier": "unknown",
+    "patch": "unknown",
+    "confidence": "low",
+    "source_type": "forum_text",
+    "reason": "玩家将Kennen列为'极难'对局，认为同等水平下Darius无法击杀，体现Kennen对线压制力强。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Vayne",
+    "role": "上单",
+    "score": 8,
+    "strength_score": 8,
+    "score_type": "matchup_difficulty",
+    "tier": "unknown",
+    "patch": "unknown",
+    "confidence": "low",
+    "source_type": "forum_text",
+    "reason": "玩家认为Vayne擅长欺负重装战士，Darius的线霸优势消失，属极难对局。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Tryndamere",
+    "role": "上单",
+    "score": 8,
+    "strength_score": 8,
+    "score_type": "matchup_difficulty",
+    "tier": "unknown",
+    "patch": "unknown",
+    "confidence": "low",
+    "source_type": "forum_text",
+    "reason": "玩家评论指出特定出装的泰达米尔对线Darius很容易，体现其counter能力。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Aatrox",
+    "role": "上单",
+    "score": 5,
+    "strength_score": 5,
+    "score_type": "stat_strength",
+    "patch": "16.13",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "基于OP.GG统计的Aatrox上单胜率48.80%，低于50%，但pick率和ban率中等，判定为中等强度，score为5。",
+    "source_refs": [
+      "https://op.gg/lol/champions/aatrox/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37",
+    "tier": "unknown"
+  },
+  {
+    "champion": "Veigar",
+    "role": "中单",
+    "score": 4,
+    "strength_score": 4,
+    "score_type": "matchup_difficulty",
+    "tier": "unknown",
+    "patch": "26.13",
+    "confidence": "medium",
+    "source_type": "stats_site",
+    "reason": "页面列出多个对位胜率低于48%的英雄，表明Veigar对线困难。",
+    "source_refs": [
+      "https://u.gg/lol/champions/veigar/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Yunara",
+    "role": "下路",
+    "score": 5,
+    "strength_score": 5,
+    "score_type": "matchup_difficulty",
+    "tier": "unknown",
+    "patch": "16.12",
+    "confidence": "medium",
+    "source_type": "stats_site",
+    "reason": "OP.GG数据显示Yunara对部分英雄胜率54.37%（强），对部分英雄胜率40.31%（弱），反映对线强度差异",
+    "source_refs": [
+      "https://op.gg/lol/champions/yunara/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Veigar",
+    "role": "中单",
+    "score": 7,
+    "strength_score": 7,
+    "score_type": "subjective_strength",
+    "tier": "unknown",
+    "patch": "26.13",
+    "confidence": "low",
+    "source_type": "manual_text",
+    "reason": "页面描述提到'Extra power for the late game'，表明Veigar后期强度高。",
+    "source_refs": [
+      "https://u.gg/lol/champions/veigar/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Veigar",
+    "role": "辅助",
+    "score": 3,
+    "strength_score": 3,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "26.13",
+    "confidence": "medium",
+    "source_type": "stats_site",
+    "reason": "根据U.GG统计，Veigar辅助在翡翠+段位胜率仅45.7%，排名第26/30，属于弱势英雄。",
+    "source_refs": [
+      "https://u.gg/lol/champions/veigar/build/support"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Yunara",
+    "role": "下路",
+    "score": 6,
+    "strength_score": 6,
+    "score_type": "subjective_strength",
+    "tier": "unknown",
+    "patch": "16.12",
+    "confidence": "low",
+    "source_type": "guide",
+    "reason": "玩家提示称Q技能可主导对线换血，低分段特定出装增强前期暴击，体现主观强度但仅单条评论",
+    "source_refs": [
+      "https://op.gg/lol/champions/yunara/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Caitlyn",
+    "role": "下路",
+    "score": 8,
+    "strength_score": 8,
+    "score_type": "stat_strength",
+    "tier": "A",
+    "patch": "16.12",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "基于LoLalytics统计，凯特琳下路在翡翠+分段胜率50.69%，排名11/55，评级A级，属于强势ADC",
+    "source_refs": [
+      "https://lolalytics.com/lol/caitlyn/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Caitlyn",
+    "role": "unknown",
+    "score": 7,
+    "strength_score": 7,
+    "score_type": "stat_strength",
+    "tier": "A",
+    "patch": "16.13",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "从LoLalytics的ARAM统计数据提取：胜率53.23%，排名58/173，评级A-，表明Caitlyn在当前版本ARAM模式中强度中上，由于是统计站点，置信度高。",
+    "source_refs": [
+      "https://lolalytics.com/lol/caitlyn/aram/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Hecarim",
+    "role": "打野",
+    "score": 5,
+    "strength_score": 5,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "16.12",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "从OP.GG统计页面获取Hecarim打野的胜率49.45%、登场率3.81%、禁用率3.57%，数据可靠，score根据胜率略低于50%定为5分",
+    "source_refs": [
+      "https://op.gg/lol/champions/hecarim/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Seraphine",
+    "role": "unknown",
+    "score": 10,
+    "strength_score": 10,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "16.13",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "来自OP.GG统计数据，Seraphine在Emerald+段位Patch16.13中胜率54.25%，排名第一，因此强度很高。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Nasus",
+    "role": "unknown",
+    "score": 9,
+    "strength_score": 9,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "16.13",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "来自OP.GG统计数据，Nasus在Emerald+段位Patch16.13中胜率53.77%，排名第二，强度很高。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Senna",
+    "role": "unknown",
+    "score": 8,
+    "strength_score": 8,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "16.13",
+    "confidence": "high",
+    "source_type": "stats_site",
+    "reason": "来自OP.GG统计数据，Senna在Emerald+段位Patch16.13中胜率53.02%，排名第三，且Ban率较高，强度高。",
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Volibear",
+    "role": "上单",
+    "score": 4,
+    "strength_score": 4,
+    "score_type": "stat_strength",
+    "tier": "unknown",
+    "patch": "unknown",
+    "confidence": "medium",
+    "source_type": "stats_site",
+    "reason": "来自OP.GG统计，Volibear上单胜率48.98%低于50%，综合Tier 4，强度偏弱",
+    "source_refs": [
+      "https://op.gg/lol/champions/volibear/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  },
+  {
+    "champion": "Volibear",
+    "role": "上单",
+    "score": 6,
+    "strength_score": 6,
+    "score_type": "subjective_strength",
+    "tier": "unknown",
+    "patch": "unknown",
+    "confidence": "low",
+    "source_type": "manual_text",
+    "reason": "玩家评论称Volibear单挑强但存在先选弱点，主观评价综合中等偏强",
+    "source_refs": [
+      "https://op.gg/lol/champions/volibear/build"
+    ],
+    "merged_from": "proposals/champion_strength_candidates.json",
+    "merged_at": "2026-06-29T04:13:37"
+  }
+]

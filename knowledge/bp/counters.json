@@ -7,7 +7,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "数据站显示剑魔上单对 Vladimir 有较好的对位表现。"
       },
       {
@@ -16,7 +18,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "数据站显示剑魔上单对 Rumble 有一定 counter 价值。"
       },
       {
@@ -25,7 +29,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "剑魔的对线压制和持续作战能力适合限制狗头发育。"
       }
     ],
@@ -36,7 +42,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "数据站显示大头是剑魔上单较难处理的对位之一。"
       },
       {
@@ -45,7 +53,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "波比能限制剑魔进场和位移节奏，对剑魔有反制价值。"
       },
       {
@@ -54,7 +64,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/aatrox/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/aatrox/build/"
+        ],
         "reason": "数据站显示石头人是剑魔较难处理的上单对位。"
       }
     ]
@@ -67,7 +79,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/darius/build/"
+        ],
         "reason": "诺手对短手近战有强压制能力，数据站显示其对 Poppy 有优势。"
       },
       {
@@ -76,7 +90,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/darius/build/"
+        ],
         "reason": "诺手持续作战和斩杀能力适合压制笨重坦克。"
       },
       {
@@ -85,7 +101,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/darius/build/"
+        ],
         "reason": "数据站显示诺手对 Riven 有一定优势，但该对位受熟练度影响较大。"
       }
     ],
@@ -96,7 +114,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/darius/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/darius/build/"
+        ],
         "reason": "吸血鬼能规避部分近战换血节奏，是诺手较难处理的对位。"
       },
       {
@@ -105,7 +125,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://www.leagueofgraphs.com/champions/counters/darius"],
+        "source_refs": [
+          "https://www.leagueofgraphs.com/champions/counters/darius"
+        ],
         "reason": "奎因远程压制和机动性较强，能限制诺手近身。"
       },
       {
@@ -114,7 +136,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://www.leagueofgraphs.com/champions/counters/darius"],
+        "source_refs": [
+          "https://www.leagueofgraphs.com/champions/counters/darius"
+        ],
         "reason": "提莫远程消耗和致盲会干扰诺手对线换血。"
       }
     ]
@@ -127,7 +151,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/build/?lane=top"
+        ],
         "reason": "数据站显示青钢影对 Yasuo 上单有较好表现。"
       },
       {
@@ -136,7 +162,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/build/?lane=top"
+        ],
         "reason": "青钢影真伤和单带威胁适合处理部分坦克/战士型上单。"
       },
       {
@@ -145,7 +173,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/build/?lane=top"
+        ],
         "reason": "数据站显示青钢影对 Gragas 有一定 counter 价值。"
       }
     ],
@@ -156,7 +186,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/counters/"
+        ],
         "reason": "贾克斯能用反击风暴限制青钢影普攻与换血节奏。"
       },
       {
@@ -165,7 +197,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/counters/"
+        ],
         "reason": "提莫远程消耗和致盲会削弱青钢影对线换血。"
       },
       {
@@ -174,7 +208,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/build/?lane=top"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/build/?lane=top"
+        ],
         "reason": "慎的防御和支援能力能缓解青钢影单带压力。"
       }
     ]
@@ -187,7 +223,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/build/"
+        ],
         "reason": "数据站显示石头人对 Vayne 上单有较好表现，护甲和强开能限制其输出环境。"
       },
       {
@@ -196,7 +234,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/build/"
+        ],
         "reason": "石头人的护甲、减攻速和团战价值能限制剑姬对线与团战发挥。"
       },
       {
@@ -205,7 +245,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/build/"
+        ],
         "reason": "石头人适合应对依赖普攻输出的上单。"
       }
     ],
@@ -216,7 +258,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/counters/"
+        ],
         "reason": "奥恩在坦克对位和团队功能上不怕石头人，数据站显示对位较有利。"
       },
       {
@@ -225,7 +269,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/counters/"
+        ],
         "reason": "塞拉斯可以偷取石头人大招，团战威胁很高。"
       },
       {
@@ -234,7 +280,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/malphite/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/malphite/build/"
+        ],
         "reason": "数据站显示克烈是石头人较难处理的对位之一。"
       }
     ]
@@ -247,7 +295,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/jax/build/"
+        ],
         "reason": "数据站显示贾克斯对 Volibear 上单有较好表现。"
       },
       {
@@ -256,7 +306,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/jax/build/"
+        ],
         "reason": "贾克斯反击风暴和后期单带能力适合应对部分普攻型战士。"
       },
       {
@@ -265,7 +317,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/camille/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/camille/counters/"
+        ],
         "reason": "数据站显示贾克斯是青钢影较难处理的对位。"
       }
     ],
@@ -276,7 +330,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/jax/build/"
+        ],
         "reason": "数据站显示蒙多是贾克斯较难处理的上单对位。"
       },
       {
@@ -285,7 +341,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/jax/build/"
+        ],
         "reason": "奥恩的坦度和控制能限制贾克斯进场和单带收益。"
       },
       {
@@ -294,7 +352,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/jax/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/jax/build/"
+        ],
         "reason": "数据站显示盖伦对贾克斯有一定反制效果。"
       }
     ]
@@ -307,7 +367,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/build/"
+        ],
         "reason": "数据站显示剑姬对 Kled 有较好表现。"
       },
       {
@@ -316,7 +378,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/counters/?lane=top"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/counters/?lane=top"
+        ],
         "reason": "剑姬的单挑和真实伤害能力适合处理部分近战战士。"
       },
       {
@@ -325,7 +389,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/build/"
+        ],
         "reason": "剑姬对坦克/战士类上单有较强单带和拆解能力。"
       }
     ],
@@ -336,7 +402,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/build/"
+        ],
         "reason": "石头人的护甲、减攻速和团战先手会限制剑姬。"
       },
       {
@@ -345,7 +413,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/build/"
+        ],
         "reason": "大头炮台和远程消耗会让剑姬较难稳定进场换血。"
       },
       {
@@ -354,7 +424,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/fiora/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/fiora/build/"
+        ],
         "reason": "蛮王的持续单挑和大招容错会给剑姬造成压力。"
       }
     ]
@@ -367,7 +439,9 @@
         "score": 4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/build/"
+        ],
         "reason": "数据站显示奥恩对石头人有较好表现，坦克对位中功能性更强。"
       },
       {
@@ -376,7 +450,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/build/"
+        ],
         "reason": "奥恩坦度和控制可以限制阿卡丽的进场节奏。"
       },
       {
@@ -385,7 +461,9 @@
         "score": 3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/counters/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/counters/"
+        ],
         "reason": "数据站显示奥恩对贾克斯有一定 counter 价值。"
       }
     ],
@@ -396,7 +474,9 @@
         "score": -4,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/build/"
+        ],
         "reason": "慎对奥恩有较好数据表现，且支援能力能影响边线节奏。"
       },
       {
@@ -405,7 +485,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/build/"
+        ],
         "reason": "波比能限制奥恩部分进场和位移节奏。"
       },
       {
@@ -414,7 +496,9 @@
         "score": -3,
         "confidence": "medium",
         "source_type": "stats_site_manual",
-        "source_refs": ["https://lolalytics.com/lol/ornn/build/"],
+        "source_refs": [
+          "https://lolalytics.com/lol/ornn/build/"
+        ],
         "reason": "数据站显示盖伦是奥恩较难处理的对位之一。"
       }
     ]

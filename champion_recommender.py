@@ -1,361 +1,770 @@
-from collections import Counter
+from __future__ import annotations
+
+import os
+from pathlib import Path
+from typing import Any
 
 from config import (
     CHAMPIONS_PATH,
     CHAMPION_TAGS_PATH,
     COUNTERS_PATH,
-    team_combo_PATH,
-    COMPOSITIONS_PATH,
+    CHAMPION_STRENGTH_PATH,
+    TEAM_COMBOS_PATH,
     load_json,
 )
 
 
+ROLE_ALIASES = {
+    "top": "上单",
+    "上单": "上单",
+
+    "jungle": "打野",
+    "jg": "打野",
+    "打野": "打野",
+
+    "mid": "中单",
+    "middle": "中单",
+    "中单": "中单",
+
+    "adc": "下路",
+    "bot": "下路",
+    "bottom": "下路",
+    "下路": "下路",
+    "射手": "下路",
+
+    "support": "辅助",
+    "sup": "辅助",
+    "辅助": "辅助",
+}
+
+
+ROLE_KEYWORDS = {
+    "上单": {"上单", "top", "toplane", "top_lane"},
+    "打野": {"打野", "jungle", "jg", "jungler"},
+    "中单": {"中单", "mid", "middle", "midlane", "mid_lane"},
+    "下路": {"下路", "adc", "bot", "bottom", "marksman", "射手"},
+    "辅助": {"辅助", "support", "sup", "辅助位"},
+}
+
+
+def normalize_role(role: str | None) -> str | None:
+    if not role:
+        return None
+
+    text = str(role).strip().lower()
+    return ROLE_ALIASES.get(text, role)
+
+
+def clean_champion_id(value: Any) -> str:
+    if value is None:
+        return ""
+
+    text = str(value).strip()
+
+    if text in {"", "暂无", "None", "null", "未知", "未知英雄"}:
+        return ""
+
+    return text
+
+
+def confidence_multiplier(confidence: str | None) -> float:
+    confidence = str(confidence or "").lower()
+
+    if confidence == "high":
+        return 1.2
+
+    if confidence == "medium":
+        return 1.0
+
+    if confidence == "low":
+        return 0.7
+
+    return 0.8
+
+
+def source_multiplier(source_type: str | None) -> float:
+    source_type = str(source_type or "").lower()
+
+    if source_type in {"manual_seed", "stats_site_manual"}:
+        return 1.1
+
+    if source_type in {"stats_site", "multi_source"}:
+        return 1.0
+
+    if source_type in {"synthetic_scenario_llm", "llm_generated"}:
+        return 0.7
+
+    return 0.9
+
+
+def calc_weight(
+    score: Any,
+    confidence: str | None = "unknown",
+    source_type: str | None = "",
+    default: int = 3,
+) -> int:
+    try:
+        base = abs(int(float(score)))
+    except (TypeError, ValueError):
+        base = default
+
+    value = base
+    value *= confidence_multiplier(confidence)
+    value *= source_multiplier(source_type)
+
+    return max(1, round(value))
+
+
 class ChampionRecommender:
-    def __init__(self):
-        self.champions = load_json(CHAMPIONS_PATH, default={})
+    def __init__(self, debug: bool | None = None):
+        self.champions_raw = load_json(CHAMPIONS_PATH, default={})
         self.champion_tags = load_json(CHAMPION_TAGS_PATH, default={})
+
         self.counters = load_json(COUNTERS_PATH, default={})
-        self.team_combo = load_json(team_combo_PATH, default={})
-        self.compositions = load_json(COMPOSITIONS_PATH, default=[])
+        self.champion_strength = load_json(CHAMPION_STRENGTH_PATH, default=[])
+        self.team_combos = load_json(TEAM_COMBOS_PATH, default=[])
+
+        if debug is None:
+            self.debug = os.environ.get("BP_SCORE_DEBUG", "0") == "1"
+        else:
+            self.debug = debug
+
+        self.champions = self._normalize_champions(self.champions_raw)
+
+    def _normalize_champions(self, data: Any) -> dict[str, dict[str, Any]]:
+        """
+        兼容几种 champions.json 格式：
+
+        1. {
+             "Aatrox": {"name": "暗裔剑魔", ...}
+           }
+
+        2. [
+             {"id": "Aatrox", "name": "暗裔剑魔"}
+           ]
+
+        3. {
+             "data": {
+               "Aatrox": {"id": "Aatrox", "name": "Aatrox", "title": "..."}
+             }
+           }
+        """
+        result: dict[str, dict[str, Any]] = {}
+
+        if isinstance(data, dict) and isinstance(data.get("data"), dict):
+            data = data["data"]
+
+        if isinstance(data, dict):
+            for champion_id, info in data.items():
+                champion_id = clean_champion_id(champion_id)
+
+                if not champion_id:
+                    continue
+
+                if isinstance(info, dict):
+                    item = dict(info)
+                else:
+                    item = {"name": str(info)}
+
+                item.setdefault("id", champion_id)
+                result[champion_id] = item
+
+            return result
+
+        if isinstance(data, list):
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+
+                champion_id = clean_champion_id(
+                    item.get("id")
+                    or item.get("champion")
+                    or item.get("champion_id")
+                    or item.get("key")
+                )
+
+                if not champion_id:
+                    continue
+
+                result[champion_id] = dict(item)
+
+            return result
+
+        return result
 
     def get_display_name(self, champion_id: str) -> str:
+        champion_id = clean_champion_id(champion_id)
+
+        if not champion_id:
+            return "未知英雄"
+
         info = self.champions.get(champion_id, {})
-        return info.get("title") or info.get("name") or champion_id
+
+        if isinstance(info, dict):
+            return (
+                info.get("display_name")
+                or info.get("cn_name")
+                or info.get("name_cn")
+                or info.get("name")
+                or champion_id
+            )
+
+        return champion_id
 
     def get_tags(self, champion_id: str) -> list[str]:
-        return self.champion_tags.get(champion_id, [])
+        champion_id = clean_champion_id(champion_id)
+
+        if not champion_id:
+            return []
+
+        raw = self.champion_tags.get(champion_id, [])
+
+        if isinstance(raw, dict):
+            tags = raw.get("tags", [])
+            roles = raw.get("roles", [])
+            lanes = raw.get("lanes", [])
+
+            result = []
+
+            if isinstance(tags, list):
+                result.extend(tags)
+
+            if isinstance(roles, list):
+                result.extend(roles)
+
+            if isinstance(lanes, list):
+                result.extend(lanes)
+
+            return [str(x) for x in result if x]
+
+        if isinstance(raw, list):
+            return [str(x) for x in raw if x]
+
+        if isinstance(raw, str):
+            return [raw]
+
+        return []
+
+    def champion_has_role(self, champion_id: str, target_role: str | None) -> bool:
+        target_role = normalize_role(target_role)
+
+        if not target_role:
+            return True
+
+        tags = self.get_tags(champion_id)
+        tag_set = {str(tag).strip().lower() for tag in tags}
+
+        role_keywords = ROLE_KEYWORDS.get(target_role, {target_role})
+
+        for keyword in role_keywords:
+            if str(keyword).lower() in tag_set:
+                return True
+
+        return False
+
+    def get_candidate_ids(
+        self,
+        target_role: str | None = None,
+        banned_champions: list[str] | None = None,
+        ally_picks: list[str] | None = None,
+        enemy_picks: list[str] | None = None,
+    ) -> list[str]:
+        banned_set = {
+            clean_champion_id(x)
+            for x in (banned_champions or [])
+            if clean_champion_id(x)
+        }
+
+        picked_set = {
+            clean_champion_id(x)
+            for x in (ally_picks or []) + (enemy_picks or [])
+            if clean_champion_id(x)
+        }
+
+        excluded = banned_set | picked_set
+
+        candidates = []
+
+        for champion_id in self.champions.keys():
+            if champion_id in excluded:
+                continue
+
+            if not self.champion_has_role(champion_id, target_role):
+                continue
+
+            candidates.append(champion_id)
+
+        return candidates
+
+    def _extract_analysis_picks(self, analysis: dict[str, Any] | None) -> tuple[list[str], list[str], list[str]]:
+        if not analysis:
+            return [], [], []
+
+        ally_picks = (
+            analysis.get("ally_picks")
+            or analysis.get("blue_picks")
+            or []
+        )
+
+        enemy_picks = (
+            analysis.get("enemy_picks")
+            or analysis.get("red_picks")
+            or []
+        )
+
+        banned_champions = (
+            analysis.get("banned_champions")
+            or analysis.get("bans")
+            or analysis.get("blue_bans", []) + analysis.get("red_bans", [])
+            or []
+        )
+
+        return ally_picks, enemy_picks, banned_champions
 
     def recommend(
         self,
-        triggered_rules: list[dict],
-        target_role: str | None = None,
         ally_picks: list[str] | None = None,
         enemy_picks: list[str] | None = None,
         banned_champions: list[str] | None = None,
+        target_role: str | None = None,
         lane_opponent: str | None = None,
-        lane_opponent_confidence: str = "unknown",
-        top_n: int = 8,
-    ) -> list[dict]:
-        ally_picks = ally_picks or []
-        enemy_picks = enemy_picks or []
-        banned_champions = banned_champions or []
+        lane_opponents: list[str] | None = None,
+        top_n: int = 10,
+        analysis: dict[str, Any] | None = None,
+        **kwargs,
+    ) -> list[dict[str, Any]]:
+        """
+        主推荐入口。
 
-        unavailable = set(ally_picks + enemy_picks + banned_champions)
+        支持两种调用方式：
 
-        wanted_tags = self._collect_wanted_tags(triggered_rules)
-        ally_tag_counter = self._count_team_tags(ally_picks)
+        1. 新方式：
+           recommend(
+               ally_picks=[...],
+               enemy_picks=[...],
+               banned_champions=[...],
+               target_role="上单",
+               lane_opponent="Aatrox",
+           )
 
-        results = []
+        2. 兼容旧方式：
+           recommend(
+               analysis=analysis,
+               target_role="上单",
+           )
+        """
+        
+        # 兼容旧 main.py 调用：
+        # recommender.recommend(analysis, target_role=...)
+        # 或 recommender.recommend(analysis, "上单")
+        if isinstance(ally_picks, dict) and analysis is None:
+            analysis = ally_picks
+            ally_picks = None
 
-        for champion_id, tags in self.champion_tags.items():
-            if champion_id in unavailable:
-                continue
+        if isinstance(enemy_picks, str) and target_role is None:
+            target_role = enemy_picks
+            enemy_picks = None
 
-            if target_role and target_role not in tags:
-                continue
+        if kwargs.get("role") and target_role is None:
+            target_role = kwargs.get("role")
 
-            score = 0
-            matched_tags = []
-            score_reasons = []
+        if kwargs.get("side"):
+            # side 暂时不用，但吃掉这个参数，避免旧代码传进来影响
+            pass
 
-            # 1. 目标位置加分
-            if target_role and target_role in tags:
-                score += 3
-                score_reasons.append(f"符合目标位置：{target_role} +3")
+        if analysis is not None:
+            a, e, b = self._extract_analysis_picks(analysis)
 
-            # 2. BP 规则推荐 tag 加分
-            for tag in wanted_tags:
-                if tag in tags:
-                    score += 2
-                    matched_tags.append(tag)
-                    score_reasons.append(f"命中推荐标签：{tag} +2")
+            if ally_picks is None:
+                ally_picks = a
 
-            # 3. 康特关系加分 / 扣分
-            counter_score, counter_reasons = self._score_counters(
-            candidate_id=champion_id,
+            if enemy_picks is None:
+                enemy_picks = e
+
+            if banned_champions is None:
+                banned_champions = b
+
+        ally_picks = [
+            clean_champion_id(x)
+            for x in (ally_picks or [])
+            if clean_champion_id(x)
+        ]
+
+        enemy_picks = [
+            clean_champion_id(x)
+            for x in (enemy_picks or [])
+            if clean_champion_id(x)
+        ]
+
+        banned_champions = [
+            clean_champion_id(x)
+            for x in (banned_champions or [])
+            if clean_champion_id(x)
+        ]
+
+        target_role = normalize_role(target_role)
+        lane_opponent = clean_champion_id(lane_opponent)
+        lane_opponents = [
+            clean_champion_id(x)
+            for x in (lane_opponents or [])
+            if clean_champion_id(x)
+        ]
+
+        if lane_opponent and lane_opponent not in lane_opponents:
+            lane_opponents.insert(0, lane_opponent)
+        candidate_ids = self.get_candidate_ids(
+            target_role=target_role,
+            banned_champions=banned_champions,
+            ally_picks=ally_picks,
             enemy_picks=enemy_picks,
-            lane_opponent=lane_opponent,
-            lane_opponent_confidence=lane_opponent_confidence,
+        )
+
+        recommendations = []
+
+        for champion_id in candidate_ids:
+            total_score = 0
+            reasons = []
+
+            role_score, role_reasons = self._score_role_fit(
+                candidate_id=champion_id,
+                target_role=target_role,
             )
-            score += counter_score
-            score_reasons.extend(counter_reasons)
 
-            # 4. 己方配合加分
-            synergy_score, synergy_reasons = self._score_team_combo(champion_id, ally_picks)
-            score += synergy_score
-            score_reasons.extend(synergy_reasons)
+            tag_score, tag_reasons = self._score_tags(
+                candidate_id=champion_id,
+                ally_picks=ally_picks,
+                enemy_picks=enemy_picks,
+            )
 
-            # 5. 阵容体系加分
-            comp_score, comp_reasons = self._score_compositions(tags, ally_tag_counter)
-            score += comp_score
-            score_reasons.extend(comp_reasons)
+            counter_score, counter_reasons = self._score_counters(
+                candidate_id=champion_id,
+                enemy_picks=enemy_picks,
+                lane_opponent=lane_opponent,
+            )
 
-            if score <= 0:
+            team_combo_score, team_combo_reasons = self._score_team_combo(
+                candidate_id=champion_id,
+                ally_picks=ally_picks,
+            )
+
+            strength_score, strength_reasons = self._score_champion_strength(
+                candidate_id=champion_id,
+                target_role=target_role,
+            )
+
+            total_score += role_score
+            total_score += tag_score
+            total_score += counter_score
+            total_score += team_combo_score
+            total_score += strength_score
+
+            reasons.extend(role_reasons)
+            reasons.extend(tag_reasons)
+            reasons.extend(counter_reasons)
+            reasons.extend(team_combo_reasons)
+            reasons.extend(strength_reasons)
+
+            if self.debug:
+                print(
+                    f"[SCORE DEBUG] {champion_id} "
+                    f"total={total_score} "
+                    f"role={role_score} "
+                    f"tag={tag_score} "
+                    f"counter={counter_score} "
+                    f"team_combo={team_combo_score} "
+                    f"strength={strength_score}"
+                )
+
+            if total_score <= 0 and not reasons:
                 continue
 
-            results.append(
+            display_name = self.get_display_name(champion_id)
+
+            recommendations.append(
                 {
+                    # 新字段
+                    "champion": champion_id,
+                    "champion_id": champion_id,
+                    "display_name": display_name,
+
+                    # 兼容旧 print_recommendations / AICommentator
                     "id": champion_id,
-                    "name": self.get_display_name(champion_id),
-                    "score": score,
-                    "matched_tags": matched_tags,
-                    "all_tags": tags,
-                    "score_reasons": score_reasons,
+                    "name": display_name,
+                    "hero": display_name,
+
+                    "score": total_score,
+                    "role_score": role_score,
+                    "tag_score": tag_score,
+                    "counter_score": counter_score,
+                    "team_combo_score": team_combo_score,
+                    "strength_score": strength_score,
+
+                    "reasons": reasons[:8],
+                    "reason": "\n".join(reasons[:8]),
+                    "description": "\n".join(reasons[:8]),
                 }
             )
 
-        results.sort(key=lambda x: x["score"], reverse=True)
-        return results[:top_n]
+        recommendations.sort(
+            key=lambda item: item.get("score", 0),
+            reverse=True,
+        )
 
-    def _collect_wanted_tags(self, triggered_rules: list[dict]) -> list[str]:
-        wanted_tags = []
+        return recommendations[:top_n]
 
-        for rule in triggered_rules:
-            recommend = rule.get("recommend", {})
-            wanted_tags.extend(recommend.get("tags", []))
+    def _score_role_fit(
+        self,
+        candidate_id: str,
+        target_role: str | None,
+    ) -> tuple[int, list[str]]:
+        if not target_role:
+            return 0, []
 
-        # 去重但保持顺序
-        return list(dict.fromkeys(wanted_tags))
+        if self.champion_has_role(candidate_id, target_role):
+            return 3, [f"符合目标位置：{target_role} +3"]
 
-    def _count_team_tags(self, picks: list[str]) -> Counter:
-        counter = Counter()
+        return -999, [f"不符合目标位置：{target_role}"]
 
-        for champion_id in picks:
-            for tag in self.get_tags(champion_id):
-                counter[tag] += 1
+    def _score_tags(
+        self,
+        candidate_id: str,
+        ally_picks: list[str],
+        enemy_picks: list[str],
+    ) -> tuple[int, list[str]]:
+        """
+        简单本地标签加分。
+        这里先不做太复杂，防止标签规则压过 JSON 证据。
+        """
+        tags = self.get_tags(candidate_id)
+        tag_set = {str(x).lower() for x in tags}
 
-        return counter
+        score = 0
+        reasons = []
+
+        if any(x in tag_set for x in ["开团", "engage", "强开"]):
+            score += 1
+            reasons.append("具备开团能力 +1")
+
+        if any(x in tag_set for x in ["坦克", "tank", "前排"]):
+            score += 1
+            reasons.append("可以补充前排 +1")
+
+        if any(x in tag_set for x in ["后期", "scaling", "carry"]):
+            score += 1
+            reasons.append("具备后期能力 +1")
+
+        return score, reasons
 
     def _score_counters(
         self,
         candidate_id: str,
         enemy_picks: list[str],
         lane_opponent: str | None = None,
-        lane_opponent_confidence: str = "unknown",
+        lane_opponents: list[str] | None = None,
     ) -> tuple[int, list[str]]:
-        """
-        counter 评分。
-
-        同时支持两种写法：
-
-        1. 候选英雄视角：
-        Poppy.good_against Aatrox
-        表示我选 Poppy 打 Aatrox 有优势。
-
-        2. 敌方英雄视角：
-        Aatrox.bad_against Poppy
-        也表示我选 Poppy 打 Aatrox 有优势。
-
-        这样就不会因为 JSON 方向不同导致 counter 完全不生效。
-        """
         score = 0
         reasons = []
+        used_relations = set()
 
         enemy_set = {
-            enemy
-            for enemy in enemy_picks
-            if enemy and enemy != "暂无"
+            clean_champion_id(champ)
+            for champ in enemy_picks
+            if clean_champion_id(champ)
         }
 
         if not enemy_set:
             return 0, []
+        lane_opponent_set = {
+            clean_champion_id(x)
+            for x in (lane_opponents or [])
+            if clean_champion_id(x)
+        }
 
-        used_relations = set()
+        if lane_opponent:
+            lane_opponent_set.add(lane_opponent)
 
-        def is_lane_enemy(enemy_id: str) -> bool:
-            return bool(lane_opponent and enemy_id == lane_opponent)
-
-        def lane_bonus(enemy_id: str) -> int:
-            if is_lane_enemy(enemy_id):
+        def lane_bonus(enemy: str) -> int:
+            if lane_opponent and enemy == lane_opponent:
                 return 2
+            if enemy in lane_opponent_set:
+                return 1
             return 0
-
-        # =========================================================
-        # 1. 直接查候选英雄视角：
-        # candidate.good_against enemy
-        # candidate.bad_against enemy
-        # =========================================================
         candidate_info = self.counters.get(candidate_id, {})
 
+        # 1. 候选英雄视角：
+        # candidate.good_against enemy
+        # candidate.bad_against enemy
         if isinstance(candidate_info, dict):
             for item in candidate_info.get("good_against", []):
-                enemy = item.get("champion")
+                if not isinstance(item, dict):
+                    continue
+
+                enemy = clean_champion_id(item.get("champion"))
+
                 if enemy not in enemy_set:
                     continue
 
-                relation_key = (candidate_id, enemy, "positive")
+                relation_key = ("candidate_good", candidate_id, enemy)
+
                 if relation_key in used_relations:
                     continue
+
                 used_relations.add(relation_key)
 
-                try:
-                    base_value = abs(int(item.get("score", 0)))
-                except (TypeError, ValueError):
-                    base_value = 0
+                weight = calc_weight(
+                    item.get("score", 3),
+                    confidence=item.get("confidence", "unknown"),
+                    source_type=item.get("source_type", ""),
+                    default=3,
+                )
 
-                value = base_value + lane_bonus(enemy)
-                score += value
+                weight += lane_bonus(enemy)
 
-                if is_lane_enemy(enemy):
-                    reasons.append(
-                        f"预计对线 {self.get_display_name(enemy)}，且本地库显示 "
-                        f"{self.get_display_name(candidate_id)} 对该英雄有优势 +{value}："
-                        f"{item.get('reason', '')}"
-                    )
-                else:
-                    reasons.append(
-                        f"对敌方 {self.get_display_name(enemy)} 有 counter 价值 +{value}："
-                        f"{item.get('reason', '')}"
-                    )
+                score += weight
+
+                reason = item.get("reason", "")
+                reasons.append(
+                    f"对 {self.get_display_name(enemy)} 有 counter 依据 +{weight}：{reason}"
+                )
 
             for item in candidate_info.get("bad_against", []):
-                enemy = item.get("champion")
+                if not isinstance(item, dict):
+                    continue
+
+                enemy = clean_champion_id(item.get("champion"))
+
                 if enemy not in enemy_set:
                     continue
 
-                relation_key = (candidate_id, enemy, "negative")
+                relation_key = ("candidate_bad", candidate_id, enemy)
+
                 if relation_key in used_relations:
                     continue
+
                 used_relations.add(relation_key)
 
-                try:
-                    base_value = -abs(int(item.get("score", -1)))
-                except (TypeError, ValueError):
-                    base_value = -1
+                weight = calc_weight(
+                    item.get("score", -3),
+                    confidence=item.get("confidence", "unknown"),
+                    source_type=item.get("source_type", ""),
+                    default=3,
+                )
 
-                value = base_value - lane_bonus(enemy)
-                score += value
+                weight += lane_bonus(enemy)
 
-                if is_lane_enemy(enemy):
-                    reasons.append(
-                        f"预计对线 {self.get_display_name(enemy)}，但本地库显示 "
-                        f"{self.get_display_name(candidate_id)} 这个对位有风险 {value}："
-                        f"{item.get('reason', '')}"
-                    )
-                else:
-                    reasons.append(
-                        f"面对敌方 {self.get_display_name(enemy)} 有风险 {value}："
-                        f"{item.get('reason', '')}"
-                    )
+                score -= weight
 
-        # =========================================================
-        # 2. 反向查敌方英雄视角：
-        # enemy.bad_against candidate  => candidate 打 enemy 有优势
-        # enemy.good_against candidate => candidate 打 enemy 有风险
-        # =========================================================
+                reason = item.get("reason", "")
+                reasons.append(
+                    f"面对 {self.get_display_name(enemy)} 有风险 -{weight}：{reason}"
+                )
+
+        # 2. 敌方英雄视角：
+        # enemy.bad_against candidate -> candidate 加分
+        # enemy.good_against candidate -> candidate 扣分
         for enemy in enemy_set:
             enemy_info = self.counters.get(enemy, {})
 
             if not isinstance(enemy_info, dict):
                 continue
 
-            # enemy.bad_against candidate
-            # 例：Aatrox.bad_against Poppy
-            # 含义：Poppy 打 Aatrox 有优势
             for item in enemy_info.get("bad_against", []):
-                target = item.get("champion")
+                if not isinstance(item, dict):
+                    continue
+
+                target = clean_champion_id(item.get("champion"))
+
                 if target != candidate_id:
                     continue
 
-                relation_key = (candidate_id, enemy, "positive")
+                relation_key = ("enemy_bad", enemy, candidate_id)
+
                 if relation_key in used_relations:
                     continue
+
                 used_relations.add(relation_key)
 
-                try:
-                    base_value = abs(int(item.get("score", -1)))
-                except (TypeError, ValueError):
-                    base_value = 1
+                weight = calc_weight(
+                    item.get("score", -3),
+                    confidence=item.get("confidence", "unknown"),
+                    source_type=item.get("source_type", ""),
+                    default=3,
+                )
 
-                value = base_value + lane_bonus(enemy)
-                score += value
+                weight += lane_bonus(enemy)
 
-                if is_lane_enemy(enemy):
-                    reasons.append(
-                        f"预计对线 {self.get_display_name(enemy)}，且本地库显示 "
-                        f"{self.get_display_name(enemy)} 害怕 {self.get_display_name(candidate_id)} +{value}："
-                        f"{item.get('reason', '')}"
-                    )
-                else:
-                    reasons.append(
-                        f"敌方 {self.get_display_name(enemy)} 被 "
-                        f"{self.get_display_name(candidate_id)} 克制 +{value}："
-                        f"{item.get('reason', '')}"
-                    )
+                score += weight
 
-            # enemy.good_against candidate
-            # 例：Aatrox.good_against Poppy
-            # 含义：Poppy 打 Aatrox 有风险
+                reason = item.get("reason", "")
+                reasons.append(
+                    f"{self.get_display_name(enemy)} 记录显示怕 {self.get_display_name(candidate_id)} +{weight}：{reason}"
+                )
+
             for item in enemy_info.get("good_against", []):
-                target = item.get("champion")
+                if not isinstance(item, dict):
+                    continue
+
+                target = clean_champion_id(item.get("champion"))
+
                 if target != candidate_id:
                     continue
 
-                relation_key = (candidate_id, enemy, "negative")
+                relation_key = ("enemy_good", enemy, candidate_id)
+
                 if relation_key in used_relations:
                     continue
+
                 used_relations.add(relation_key)
 
-                try:
-                    base_value = -abs(int(item.get("score", 1)))
-                except (TypeError, ValueError):
-                    base_value = -1
+                weight = calc_weight(
+                    item.get("score", 3),
+                    confidence=item.get("confidence", "unknown"),
+                    source_type=item.get("source_type", ""),
+                    default=3,
+                )
 
-                value = base_value - lane_bonus(enemy)
-                score += value
+                weight += lane_bonus(enemy)
 
-                if is_lane_enemy(enemy):
-                    reasons.append(
-                        f"预计对线 {self.get_display_name(enemy)}，但本地库显示 "
-                        f"{self.get_display_name(enemy)} 对 {self.get_display_name(candidate_id)} 有优势 {value}："
-                        f"{item.get('reason', '')}"
-                    )
-                else:
-                    reasons.append(
-                        f"面对敌方 {self.get_display_name(enemy)} 有 counter 风险 {value}："
-                        f"{item.get('reason', '')}"
-                    )
+                score -= weight
+
+                reason = item.get("reason", "")
+                reasons.append(
+                    f"{self.get_display_name(enemy)} 对 {self.get_display_name(candidate_id)} 有优势 -{weight}：{reason}"
+                )
 
         return score, reasons
 
-    def _score_team_combo(self, candidate_id: str, ally_picks: list[str]) -> tuple[int, list[str]]:
-        """
-        根据 team_combos.json 计算候选英雄和我方已选英雄的配合分。
-
-        team_combos.json 当前格式是 list：
-        [
-        {
-            "champions": ["Malphite", "Yasuo"],
-            "score": 9,
-            "reason": "..."
-        }
-        ]
-        """
+    def _score_team_combo(
+        self,
+        candidate_id: str,
+        ally_picks: list[str],
+    ) -> tuple[int, list[str]]:
         score = 0
         reasons = []
 
         ally_set = {
-            champ
+            clean_champion_id(champ)
             for champ in ally_picks
-            if champ and champ != "暂无"
+            if clean_champion_id(champ)
         }
 
         if not ally_set:
             return 0, []
 
-        combos = self.team_combo
+        combos = self.team_combos
 
-        # 兼容旧格式：如果以后或以前有人写成 dict，也尽量展开成 list
         if isinstance(combos, dict):
             if isinstance(combos.get("combos"), list):
                 combos = combos["combos"]
             else:
                 expanded = []
+
                 for value in combos.values():
                     if isinstance(value, list):
                         expanded.extend(value)
                     elif isinstance(value, dict):
                         expanded.append(value)
+
                 combos = expanded
 
         if not isinstance(combos, list):
@@ -366,14 +775,19 @@ class ChampionRecommender:
                 continue
 
             champions = combo.get("champions", [])
+
             if not isinstance(champions, list):
                 continue
 
-            # 候选英雄必须在这个 combo 里
+            champions = [
+                clean_champion_id(champ)
+                for champ in champions
+                if clean_champion_id(champ)
+            ]
+
             if candidate_id not in champions:
                 continue
 
-            # 这个 combo 里还必须至少有一个我方已选英雄
             matched_allies = [
                 champ
                 for champ in champions
@@ -383,15 +797,19 @@ class ChampionRecommender:
             if not matched_allies:
                 continue
 
-            try:
-                raw_score = int(combo.get("score", 0))
-            except (TypeError, ValueError):
-                raw_score = 0
+            raw_score = combo.get("score", 6)
 
-            # team_combo 原始 score 通常是 7/8/9，推荐系统里不要一次加太爆
-            value = max(1, min(5, round(raw_score / 2)))
+            weight = calc_weight(
+                raw_score,
+                confidence=combo.get("confidence", "unknown"),
+                source_type=combo.get("source_type", ""),
+                default=4,
+            )
 
-            score += value
+            # 阵容配合不能压过 counter，压缩一下。
+            weight = max(1, min(6, round(weight / 2)))
+
+            score += weight
 
             matched_names = "、".join(
                 self.get_display_name(champ)
@@ -401,45 +819,66 @@ class ChampionRecommender:
             reason = combo.get("reason", "")
 
             reasons.append(
-                f"和我方 {matched_names} 有阵容配合 +{value}：{reason}"
+                f"和我方 {matched_names} 有阵容配合 +{weight}：{reason}"
             )
 
         return score, reasons
-    def _score_compositions(self, candidate_tags: list[str], ally_tag_counter: Counter) -> tuple[int, list[str]]:
+
+    def _score_champion_strength(
+        self,
+        candidate_id: str,
+        target_role: str | None = None,
+    ) -> tuple[int, list[str]]:
         score = 0
         reasons = []
 
-        ally_tags = set(ally_tag_counter.keys())
-        candidate_tag_set = set(candidate_tags)
-        combined_tags = ally_tags | candidate_tag_set
+        data = self.champion_strength
 
-        for comp in self.compositions:
-            required_tags = set(comp.get("required_tags", []))
-            bonus_tags = set(comp.get("bonus_tags", []))
+        if isinstance(data, dict):
+            data = data.get("champions", [])
 
-            if not required_tags:
+        if not isinstance(data, list):
+            return 0, []
+
+        target_role = normalize_role(target_role)
+
+        for item in data:
+            if not isinstance(item, dict):
                 continue
 
-            missing_before = required_tags - ally_tags
-            missing_after = required_tags - combined_tags
+            champion = clean_champion_id(item.get("champion"))
 
-            filled_tags = missing_before - missing_after
+            if champion != candidate_id:
+                continue
 
-            if filled_tags:
-                value = len(filled_tags) * 2
-                score += value
+            item_role = normalize_role(item.get("role"))
+
+            if target_role and item_role and item_role != target_role:
+                continue
+
+            raw_score = item.get("score", item.get("strength_score", 0))
+
+            weight = calc_weight(
+                raw_score,
+                confidence=item.get("confidence", "unknown"),
+                source_type=item.get("source_type", ""),
+                default=2,
+            )
+
+            # 英雄强度只是辅助，不要压过 counter。
+            weight = max(1, min(4, round(weight / 2)))
+
+            score += weight
+
+            reason = item.get("reason", "")
+
+            if reason:
                 reasons.append(
-                    f"帮助靠近「{comp.get('name', comp.get('id'))}」体系，补足 {list(filled_tags)} +{value}"
+                    f"当前强度参考 +{weight}：{reason}"
                 )
-
-            # 如果已经满足体系，候选还能补 bonus tag，少量加分
-            if not missing_after:
-                matched_bonus = candidate_tag_set & bonus_tags
-                if matched_bonus:
-                    value = len(matched_bonus)
-                    score += value
-                    reasons.append(
-                        f"强化「{comp.get('name', comp.get('id'))}」体系 bonus 标签 {list(matched_bonus)} +{value}"
-                    )
+            else:
+                reasons.append(
+                    f"当前强度参考 +{weight}"
+                )
 
         return score, reasons

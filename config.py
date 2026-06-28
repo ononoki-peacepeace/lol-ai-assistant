@@ -18,7 +18,8 @@ KNOWLEDGE_DIR = BASE_DIR / "knowledge"
 BP_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "bp"
 RAW_KNOWLEDGE_DIR = KNOWLEDGE_DIR / "raw"
 DEBUG_OUTPUT_DIR = BASE_DIR / "debug_output"
-
+CHAMPION_STRENGTH_PATH = BP_KNOWLEDGE_DIR / "champion_strength.json"
+TEAM_COMBOS_PATH = BP_KNOWLEDGE_DIR / "team_combos.json"
 
 # =========================
 # 资源路径

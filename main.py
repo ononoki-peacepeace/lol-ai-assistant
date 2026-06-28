@@ -8,7 +8,12 @@ from config import (
     ROLE_MAP,
     load_layout,
 )
+from datetime import datetime
 
+from tools.knowledge.search_job_queue import (
+    append_jobs,
+    build_jobs_from_bp,
+)
 from screen_capture import ScreenCapture
 from champion_detector import ChampionDetector
 from bp_state import BPState
@@ -20,9 +25,27 @@ AI_STATE = {
     "last_ai_key": None,
     "is_ai_busy": False,
 }
+ASYNC_RAG_STATE = {
+    "last_key": None,
+}
 
+def build_async_rag_key(
+    ally_picks,
+    enemy_picks,
+    banned_champions,
+    target_role,
+    lane_opponent,
+):
+    def clean_items(items):
+        return tuple(x for x in items if x and x != "暂无")
 
-
+    return (
+        clean_items(ally_picks),
+        clean_items(enemy_picks),
+        clean_items(banned_champions),
+        target_role or "",
+        lane_opponent or "",
+    )
 def build_ai_state_key(
     ally_picks,
     enemy_picks,
@@ -371,12 +394,39 @@ def run_bp_recommendation(
         else:
             print(role, info)
 
-    lane_opponent, confidence = role_inferer.get_lane_opponent(
+    lane_result = role_inferer.get_lane_opponent_options(
         enemy_picks=enemy_picks,
         target_role=target_role,
     )
 
-    print(f"\n预计对线敌人：{lane_opponent or '未知'}，置信度：{confidence}")
+    lane_opponent = lane_result.get("primary", "")
+    lane_confidence = lane_result.get("confidence", "unknown")
+
+    lane_opponent_options = [
+        item.get("champion")
+        for item in lane_result.get("options", [])
+        if item.get("champion")
+    ]
+
+    print("\n===== 敌方位置推断 =====")
+
+    options = lane_result.get("options", [])
+
+    if options:
+        option_text = " / ".join(
+            f"{item.get('champion')}({round(item.get('ratio', 0) * 100)}%)"
+            for item in options
+            if item.get("champion")
+        )
+
+        print(
+            f"预计对线敌人：{lane_opponent or '未知'}，"
+            f"置信度：{lane_confidence}，"
+            f"候选：{option_text}"
+        )
+    else:
+        print("预计对线敌人：未知，置信度：unknown")    
+    
     banned_champions = flatten_existing(blue_bans, red_bans)
 
     analyzer = BPAnalyzer()
@@ -388,14 +438,12 @@ def run_bp_recommendation(
     )
 
     recommendations = recommender.recommend(
-        triggered_rules=analysis.get("triggered_rules", []),
-        target_role=target_role,
         ally_picks=ally_picks,
         enemy_picks=enemy_picks,
         banned_champions=banned_champions,
+        target_role=target_role,
         lane_opponent=lane_opponent,
-        lane_opponent_confidence=confidence,
-        top_n=5,
+        lane_opponents=lane_opponent_options,
     )
 
     if use_ai and recommendations:
@@ -432,6 +480,40 @@ def run_bp_recommendation(
 
             finally:
                 AI_STATE["is_ai_busy"] = False
+    current_rag_key = build_async_rag_key(
+        ally_picks=ally_picks,
+        enemy_picks=enemy_picks,
+        banned_champions=banned_champions,
+        target_role=target_role,
+        lane_opponent=lane_opponent,
+    )
+
+    if current_rag_key != ASYNC_RAG_STATE["last_key"]:
+        match_id = datetime.now().strftime("bp_%Y%m%d_%H%M%S")
+
+        rag_jobs = build_jobs_from_bp(
+            recommendations=recommendations,
+            ally_picks=ally_picks,
+            enemy_picks=enemy_picks,
+            target_role=target_role,
+            lane_opponent=lane_opponent,
+            lane_opponents=lane_opponent_options,
+            max_jobs=4,
+        )
+
+        added_count = append_jobs(
+            jobs=rag_jobs,
+            match_id=match_id,
+        )
+
+        if added_count:
+            print(f"[ASYNC RAG] 已加入后台搜索队列：{added_count} 条")
+        else:
+            print("[ASYNC RAG] 没有新增搜索任务，可能已经查过。")
+
+        ASYNC_RAG_STATE["last_key"] = current_rag_key
+    else:
+        print("[ASYNC RAG] BP 状态没变化，跳过添加搜索任务。")
 
 
 def watch_bp_command(side: str, role: str | None, use_ai: bool) -> None:

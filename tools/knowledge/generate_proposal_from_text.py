@@ -289,41 +289,113 @@ JSON Schema：
 
 
 def call_llm(prompt: str) -> str:
-    llm_config = load_json(CONFIG_PATH)
+    import json
+    import os
+    from pathlib import Path
 
-    api_key_env = llm_config.get("api_key_env", "DEEPSEEK_API_KEY")
-    api_key = os.environ.get(api_key_env)
+    root_dir = Path(__file__).resolve().parents[2]
+    config_path = root_dir / "configs" / "llm_config.json"
+
+    with open(config_path, "r", encoding="utf-8-sig") as f:
+        config = json.load(f)
+
+    provider = config.get("provider", "openai_compatible")
+    model = config.get("model", "deepseek-v4-flash")
+    temperature = float(config.get("temperature", 0.2))
+    max_tokens = int(config.get("max_tokens", 2000))
+
+    if provider == "ollama":
+        return call_ollama(
+            prompt=prompt,
+            model=model,
+            host=config.get("host", "http://127.0.0.1:11434"),
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+
+    if provider == "openai_compatible":
+        return call_openai_compatible(
+            prompt=prompt,
+            model=model,
+            base_url=config.get("base_url", "https://api.deepseek.com"),
+            api_key_env=config.get("api_key_env", "DEEPSEEK_API_KEY"),
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+
+    raise ValueError(f"不支持的 LLM provider: {provider}")
+
+
+def call_ollama(
+    prompt: str,
+    model: str,
+    host: str,
+    temperature: float,
+    max_tokens: int,
+) -> str:
+    from ollama import Client
+
+    client = Client(host=host)
+
+    response = client.chat(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": "你是严格的 JSON 生成器。只输出合法 JSON，不要输出 Markdown，不要解释。",
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
+        options={
+            "temperature": temperature,
+            "num_predict": max_tokens,
+        },
+    )
+
+    return response["message"]["content"]
+
+
+def call_openai_compatible(
+        prompt: str,
+        model: str,
+        base_url: str,
+        api_key_env: str,
+        temperature: float,
+        max_tokens: int,
+    ) -> str:
+    import os
+    from openai import OpenAI
+
+    api_key = os.getenv(api_key_env)
 
     if not api_key:
         raise RuntimeError(f"环境变量 {api_key_env} 没有设置。")
 
     client = OpenAI(
         api_key=api_key,
-        base_url=llm_config.get("base_url", "https://api.deepseek.com"),
+        base_url=base_url,
     )
-
-    model = llm_config.get("model", "deepseek-v4-flash")
-    temperature = llm_config.get("temperature", 0.2)
-    max_tokens = llm_config.get("max_tokens", 1000)
 
     response = client.chat.completions.create(
         model=model,
-        temperature=temperature,
-        max_tokens=max_tokens,
         messages=[
             {
                 "role": "system",
-                "content": "你只输出合法 JSON 数组，不输出 Markdown，不输出额外解释。"
+                "content": "你是严格的 JSON 生成器。只输出合法 JSON，不要输出 Markdown，不要解释。",
             },
             {
                 "role": "user",
-                "content": prompt
-            }
+                "content": prompt,
+            },
         ],
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
 
-    return response.choices[0].message.content or ""
-
+    return response.choices[0].message.content
 
 def normalize_items(items: list, kind: str):
     """

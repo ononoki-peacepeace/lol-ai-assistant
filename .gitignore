@@ -20,7 +20,8 @@ knowledge/proposals/merge_state.json
 knowledge/search/bp_search_jobs.json
 knowledge/search/planned_bp_search_jobs.json
 
-
+knowledge/proposals/
+knowledge/scenarios/
 
 # Local temporary files
 *.log

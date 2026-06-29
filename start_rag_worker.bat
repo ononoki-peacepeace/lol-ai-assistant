@@ -15,7 +15,7 @@ if not exist ".venv\Scripts\python.exe" (
     exit /b 1
 )
 
-echo 如果需要 RAG，请先运行 setup_keys.bat 配置 DEEPSEEK_API_KEY 和 TAVILY_API_KEY。
+echo 请先运行 setup_keys.bat 配置 DEEPSEEK_API_KEY 和 TAVILY_API_KEY。
 
 echo.
 echo [启动] 后台监听 knowledge\search\bp_search_jobs.json

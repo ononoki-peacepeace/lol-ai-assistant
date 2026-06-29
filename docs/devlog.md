@@ -434,3 +434,412 @@ RAG：
 
 这个方向更现实，也更适合当前开发阶段。
 只要上单 MVP 跑通，后续扩展到其他位置、在线共享、社区反馈和自动知识更新都会更自然。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2026-06-29
+
+Devlog - LOL AI Assistant
+
+今日主题：BP 后端闭环完成，开始进入产品化包装阶段
+
+今天主要完成了 LOL AI Assistant 的 BP Assistant 后端闭环，并开始把项目从“脚本工具”整理成一个更像产品的形态。
+
+---
+
+1. BP 后端链路基本成型
+
+目前 BP 功能已经形成完整 MVP 链路：
+
+客户端截图
+→ 识别 BP 槽位
+→ 获取我方 / 敌方 picks 和 bans
+→ 推断敌方位置与可能对线敌人
+→ ChampionRecommender 推荐英雄
+→ AICommentator 生成自然语言解释
+→ 异步 RAG 生成搜索任务
+→ 搜索结果进入 candidates
+→ 人工 approve
+→ merge 到正式知识库
+→ 下次推荐读取正式知识库
+
+这意味着 BP 不再只是临时脚本，而是已经具备了“识别、推荐、解释、学习、沉淀”的完整产品闭环。
+
+---
+
+2. 修正了选人界面左右逻辑
+
+今天确认了一个重要事实：
+
+无论实际是红方还是蓝方，客户端里我方选人始终显示在左边，敌方始终显示在右边。
+
+因此后续逻辑应以：
+
+左侧 = ally / 我方
+右侧 = enemy / 敌方
+
+而不是用真实蓝红方来反转。
+
+这会影响后续 UI 和识别命名。短期可以继续沿用 "blue_picks / red_picks" 字段，但语义上应当视为 "left_picks / right_picks"。
+
+---
+
+3. Ban 位坐标和裁剪调试
+
+今天新增了独立调试脚本：
+
+debug_bp_slots.py
+
+用于保存当前 BP 界面的槽位截图，包括：
+
+full_frame.png
+overlay_slots.png
+blue_bans/
+red_bans/
+blue_picks/
+red_picks/
+
+通过截图确认了之前 Ban 位坐标偏差较大，并根据实际红框位置调整了 ban 位坐标。
+
+同时确认 ban 位裁剪尺寸可通过：
+
+BAN_TEMPLATE_SIZE
+
+在 "config.py" 中统一控制。
+
+当前建议值大约为：
+
+BAN_TEMPLATE_SIZE = 48
+
+后续可以根据 debug 图继续微调。
+
+---
+
+4. 推荐器接入正式知识库
+
+今天确认并修正了推荐器逻辑，使 "ChampionRecommender" 能够真正读取正式知识库：
+
+knowledge/bp/counters.json
+knowledge/bp/champion_strength.json
+knowledge/bp/team_combos.json
+
+推荐器现在支持：
+
+counter 正向 / 反向关系
+team_combo list 格式
+champion_strength 当前版本强度
+多候选对线敌人加权
+ban / 已选英雄过滤
+推荐理由输出给 AICommentator
+
+同时解决了推荐器本身正常，但 main.py / AICommentator 衔接字段不一致的问题。
+
+---
+
+5. 多位置英雄推断优化
+
+之前多位置英雄容易导致：
+
+预计对线敌人：未知
+
+今天将逻辑改为：
+
+根据敌方整体阵容进行位置分配
+如果存在多个合理结果，就返回多个候选对线敌人
+
+例如：
+
+预计对线敌人：Yone，置信度：ambiguous，候选：Yone / Tristana
+
+推荐器会将最可能的对线敌人给予更高 counter 权重，其他候选也会作为参考。
+
+---
+
+6. AI 输出推荐数量优化
+
+今天排查了 AI 解释只讲少量推荐的问题。
+
+最终确认需要同时检查：
+
+main.py 是否传入完整 recommendations
+ai_commentator.py 是否格式化时截断
+prompt 是否明确要求输出多个推荐
+max_tokens 是否足够
+
+调整后，AICommentator 的职责进一步明确：
+
+ChampionRecommender：决定推荐谁
+AICommentator：决定怎么解释、以什么角色语气解释
+
+因此 "ai_commentator.py" 不应删除，后续它会成为角色卡和二次元产品感的核心。
+
+---
+
+7. Candidate 审核与正式库合并
+
+今天确认了 review app 的行为：
+
+点 approve 只是把 candidate 标记为 approved
+不会自动进入 knowledge/bp 正式库
+
+因此补充了合并流程：
+
+review_app.py
+→ review_status = approved
+→ merge_approved_proposals.py
+→ knowledge/bp/*.json
+
+并新增了启动脚本：
+
+merge_approved.bat
+
+用于 dry-run 预览后再正式合并 approved candidates。
+
+---
+
+8. 异步 RAG 队列统一
+
+今天将之前的 RAG 任务结构整理为统一队列：
+
+knowledge/search/bp_search_jobs.json
+
+并新增：
+
+tools/knowledge/search_job_queue.py
+
+用于：
+
+追加搜索任务
+生成 job_key
+去重
+区分 jobs / completed_jobs / failed_jobs
+
+同时给 "run_search_jobs.py" 增加了：
+
+--loop
+--idle-sleep
+
+让它可以作为后台 worker 持续监听队列。
+
+现在异步 RAG 流程为：
+
+main.py 当前 BP
+→ build_jobs_from_bp()
+→ append_jobs()
+→ bp_search_jobs.json
+→ run_search_jobs.py --loop
+→ generate_proposal_from_sources.py
+→ proposals candidates
+
+---
+
+9. 异步 RAG 搜索内容优化
+
+今天调整了异步 RAG 的搜索方向。
+
+不再只搜索：
+
+推荐英雄 vs 对线敌人
+
+而是改为更合理的组合：
+
+谁 counter 对线敌人
+推荐英雄当前版本强度
+推荐英雄与我方队友的配合
+对线敌人当前版本强度
+
+例如：
+
+Who counters Darius 上单
+Vladimir 上单 current patch strength
+Vladimir synergy with allies
+Darius 上单 current patch strength
+
+其中 strength 类任务使用：
+
+kind = strength
+
+但实际仍会写入：
+
+knowledge/proposals/champion_strength_candidates.json
+
+---
+
+10. .env 与 API Key 加载
+
+今天发现 ".env" 文件不会自动成为系统环境变量，Python 脚本必须主动加载。
+
+因此调整了相关脚本，使它们 import "config" 来加载 ".env"：
+
+run_search_jobs.py
+generate_proposal_from_sources.py
+generate_proposal_from_text.py
+
+并修复了 "ROOT_DIR" 使用前未定义的问题。
+
+后续产品化方向是：
+
+setup_keys.bat
+→ 用户输入 DEEPSEEK_API_KEY / TAVILY_API_KEY
+→ 写入 .env
+→ Python 启动时自动加载
+
+---
+
+11. 启动脚本与产品化包装
+
+今天新增了一组 bat 启动脚本：
+
+start_bp.bat
+start_rag_worker.bat
+start_review.bat
+merge_approved.bat
+setup_keys.bat
+
+这些脚本让项目从“每次手敲命令”变成了可双击启动的小产品雏形。
+
+当前阶段还不适合直接打包 exe，因为项目仍在快速迭代，而且涉及：
+
+OpenCV
+mss
+Streamlit
+DeepSeek API
+Tavily
+本地 JSON 知识库
+多个后台进程
+
+因此当前包装路线确定为：
+
+先 bat 启动器
+再配置 / 角色卡
+再前端壳
+最后再考虑 exe
+
+---
+
+12. Git 清理与提交
+
+今天整理了 ".gitignore"，将运行数据和敏感数据排除出版本控制：
+
+.env
+knowledge/raw/
+knowledge/proposals/*_candidates.json
+knowledge/proposals/merge_state.json
+knowledge/search/bp_search_jobs.json
+debug_output/
+*.bak.*
+
+并提交了：
+
+Add launch scripts and debug tools
+
+提交内容包括：
+
+debug_bp_slots.py
+bat 启动脚本
+.env / RAG env 加载相关修复
+停止追踪 proposals candidates 和 raw web snapshots
+
+这让仓库更干净，运行数据不再污染 Git。
+
+---
+
+当前项目状态
+
+目前可以认为：
+
+BP Assistant 后端 MVP 基本完成
+
+已经具备：
+
+BP 识别
+推荐系统
+AI 解释
+知识库
+RAG 补全
+候选审核
+正式库合并
+启动脚本
+debug 工具
+
+但还不是最终产品，因为还缺：
+
+角色卡系统强化
+统一后端输出结构
+前端 UI
+智能启动器
+更完善的配置页面
+
+---
+
+明日计划
+
+下一步建议优先做：
+
+1. 增加 BP 有效性判断，避免不在 BP 界面时调用 AI / RAG
+2. 设计 smart_launcher.py，检测到进入 BP 后再启动 BP Assistant
+3. 补强角色卡后端
+4. 统一 BP 后端输出 JSON，方便前端读取
+5. 开始做 Streamlit / PySide6 前端壳
+
+重点是继续从“功能可用”推进到“产品可用”。
+
+---
+
+今日总结
+
+今天最大的进展是：
+
+LOL AI Assistant 的 BP 后端闭环已经基本完成。
+
+项目已经不只是一个识别 + 推荐脚本，而是具备了：
+
+可运行
+可解释
+可学习
+可审核
+可沉淀
+可启动
+
+的 BP Agent 产品雏形。
+
+下一阶段的核心不是继续堆算法功能，而是开始做产品包装：
+
+角色卡
+前端
+智能启动
+用户配置
+更好的交互体验
